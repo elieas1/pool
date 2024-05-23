@@ -1,6 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import { useAccount } from "wagmi";
 import classes from "./classes.module.css";
 import { Button, Card, CardBody, Input } from "@nextui-org/react";
@@ -51,11 +51,9 @@ const Page = () => {
     isLoadingNewCycle,
   } = useAdminActions({ refetchAdminData });
 
-  useEffect(() => {
-    if (ownerAddress) {
-      if (address !== ownerAddress || !address) {
-        replace("/");
-      }
+  useLayoutEffect(() => {
+    if (address !== ownerAddress || !address) {
+      replace("/");
     }
   }, [address, ownerAddress, replace]);
 
@@ -81,7 +79,6 @@ const Page = () => {
 
   return (
     <div className={classes.wrapper}>
-      <div className={classes.welcome}>Admin: ROAYRE</div>
       <div className="w-[350px]">
         <Card isBlurred>
           <CardBody>

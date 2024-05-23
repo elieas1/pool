@@ -1,4 +1,5 @@
 import { depositAbi, depositAddress } from "@/utils/depositContract";
+import { formatUsdc } from "@/utils/functions";
 import { useReadContracts } from "wagmi";
 
 const useGetInfo = () => {
@@ -42,7 +43,7 @@ const useGetInfo = () => {
   const { result: totalDepositBigInt } = data?.[0] ?? {};
   const { result: rewardHistory } = data?.[1] ?? {};
   const { result: withdrawRequests } = data?.[2] ?? {};
-  const totalDeposited = Number(totalDepositBigInt);
+  const totalDeposited = formatUsdc(Number(totalDepositBigInt));
 
   return {
     totalDeposited,

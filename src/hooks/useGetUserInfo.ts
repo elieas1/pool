@@ -1,4 +1,5 @@
 import { depositAbi, depositAddress } from "@/utils/depositContract";
+import { parseUsdc } from "@/utils/functions";
 import { useAccount, useReadContract } from "wagmi";
 
 type response = {
@@ -34,11 +35,13 @@ const useGetUserInfo = () => {
     args: [address],
   });
 
-  const pendingAmount = Number(userData?.pendingAmount) || 0;
-  const depositedAmount = Number(userData?.amount) || 0;
-  const withdrawableAmount = Number(userData?.withdrawableAmount) || 0;
-  const claimableRewards = Number(userData?.claimableRewards) || 0;
-  const claimedRewards = Number(userData?.claimedRewards) || 0;
+  const pendingAmount = parseUsdc(Number(userData?.pendingAmount) || 0);
+  const depositedAmount = parseUsdc(Number(userData?.amount) || 0);
+  const withdrawableAmount = parseUsdc(
+    Number(userData?.withdrawableAmount) || 0
+  );
+  const claimableRewards = parseUsdc(Number(userData?.claimableRewards) || 0);
+  const claimedRewards = parseUsdc(Number(userData?.claimedRewards) || 0);
   const withdrawApproved = userData?.withdrawApproved || false;
 
   return {
