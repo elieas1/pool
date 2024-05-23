@@ -1,0 +1,11 @@
+.tooltip {
+  border-radius: 50px;
+  font-size: 0.6rem;
+  border: 1px solid;
+  height: 13px;
+  width: 13px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+}

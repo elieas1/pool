@@ -1,0 +1,23 @@
+.wrapper {
+  padding: 5px 15px;
+  min-height: 250px;
+}
+
+.value {
+  font-size: 0.9rem;
+}
+
+.property {
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.image {
+  object-fit: cover;
+  height: 240px;
+}
+
+.title {
+  font-weight: bold;
+  font-size: 1.5rem;
+}
