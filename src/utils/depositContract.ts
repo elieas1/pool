@@ -1,4 +1,4 @@
-export const depositAddress = "0x5A544485F99F44E4F1398059A23Ab60695451E88";
+export const depositAddress = "0x9974977627EdD6A430a71e1aCbcf434F636C98F6";
 
 export const depositAbi = [
   {
