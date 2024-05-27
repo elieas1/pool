@@ -23,12 +23,20 @@ const Page = () => {
     refetchInfo,
     isSuccessInfo,
   } = useGetInfo();
+
   const { userBalance, refetchBalances, isSuccessLoadingBalance } =
     useGetUsdcBalance({
       address,
     });
 
-  const { deposit, isLoadingDeposit, isSuccessDeposit } = useDepositActions();
+  const {
+    deposit,
+    isLoadingDeposit,
+    isSuccessDeposit,
+    isLoadingApprove,
+    isSuccessApprove,
+  } = useDepositActions();
+
   const {
     claimRewards,
     isLoadingClaimRewards,
@@ -59,6 +67,7 @@ const Page = () => {
     withdrawableAmount,
     withdrawApproved,
     refetchUserData,
+    withrawalRequestAmount,
   } = useGetUserInfo();
 
   useEffect(() => {
@@ -122,9 +131,12 @@ const Page = () => {
     <div className={`${classes.wrapper}`}>
       <div className="flex-1 flex flex-col gap-2">
         <Skeleton className="rounded-medium" isLoaded={isSuccessLoadingBalance}>
-          <Card isBlurred>
+          <Card style={{ backgroundColor: "#2E334B" }} isBlurred>
             <CardBody>
-              <div className="flex justify-between p-5">
+              <div
+                style={{ color: "white" }}
+                className="flex justify-between p-5"
+              >
                 <div>My USDC balance</div>
                 <div>{userBalance} USDC</div>
               </div>
@@ -143,8 +155,9 @@ const Page = () => {
             withdrawApproved={withdrawApproved!}
             withdrawableAmount={withdrawableAmount}
             pendingAmount={pendingAmount}
+            isSuccessApprove={isSuccessApprove}
             onDeposit={deposit}
-            isLoadingDeposit={isLoadingDeposit}
+            isLoadingDeposit={isLoadingDeposit || isLoadingApprove}
             onClaim={claimRewards}
             isLoadingClaim={isLoadingClaimRewards}
             onReDeposit={reDeposit}
@@ -155,13 +168,15 @@ const Page = () => {
             isLoadingCancelWithdraw={isLoadingCancelWithdraw}
             onWithdraw={withdraw}
             isLoadingWithdraw={isLoadingWithdraw}
+            userBalance={userBalance}
+            withrawalRequestAmount={withrawalRequestAmount}
           />
         </Skeleton>
       </div>
       <div className="flex-1 flex flex-col gap-2">
         <Skeleton className="rounded-medium" isLoaded={isSuccessInfo}>
-          <Card isBlurred>
-            <CardBody>
+          <Card style={{ backgroundColor: "#2E334B" }} isBlurred>
+            <CardBody style={{ color: "white" }}>
               <div className="flex justify-between p-5">
                 <div>Total Deposits:</div>
                 <div>{totalDeposited} USDC</div>

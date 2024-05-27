@@ -3,7 +3,8 @@ import CardItem from "@/components/card/Card";
 import EmptySpace from "@/components/emptySpace/EmptySpace";
 import useGetInfo from "@/hooks/useGetInfo";
 import useGetUserInfo from "@/hooks/useGetUserInfo";
-import { Skeleton } from "@nextui-org/react";
+import { Button, Skeleton } from "@nextui-org/react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 export default function Home() {
@@ -17,18 +18,15 @@ export default function Home() {
   };
 
   return (
-    <main className="flex flex-col items-center">
-      <EmptySpace spaceTop={50} />
-      <Skeleton style={{ borderRadius: "25px" }} isLoaded={isSuccesUserData}>
-        <CardItem
-          title="Name goes here"
-          imageSource="/image.avif"
-          totalDeposited={totalDeposited}
-          apr={0}
-          onPress={navigateToPool}
-          userDeposit={depositedAmount + pendingAmount}
-        />
-      </Skeleton>
-    </main>
+    <Skeleton style={{ borderRadius: "25px" }} isLoaded>
+      <CardItem
+        title="Numerical Stable Engine V1"
+        imageSource="/vault.png"
+        totalDeposited={totalDeposited}
+        apr={0}
+        onPress={navigateToPool}
+        userDeposit={depositedAmount + pendingAmount}
+      />
+    </Skeleton>
   );
 }

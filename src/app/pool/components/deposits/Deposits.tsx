@@ -9,9 +9,9 @@ type Props = {
 
 const Deposits = ({ approved, pending }: Props) => {
   return (
-    <Card isBlurred>
+    <Card style={{ backgroundColor: "#2E334B" }} isBlurred>
       <CardBody>
-        <div className="flex justify-between p-5">
+        <div style={{ color: "white" }} className="flex justify-between p-5">
           <div className="flex gap-2">
             Pending Deposit
             <Tooltip content="Pending amount requires admin approval before being included in the deposited pool">
@@ -21,7 +21,7 @@ const Deposits = ({ approved, pending }: Props) => {
           <div>{pending} USDC</div>
         </div>
 
-        <div className="flex justify-between p-5">
+        <div style={{ color: "white" }} className="flex justify-between p-5">
           <div>Approved Deposit</div>
           <div>{approved} USDC</div>
         </div>

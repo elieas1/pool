@@ -1,4 +1,5 @@
 import { depositAbi, depositAddress } from "@/utils/depositContract";
+import { parseUsdc } from "@/utils/functions";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
 import { useWriteContract } from "wagmi";
@@ -55,11 +56,12 @@ const useWithdrawDeposit = () => {
     });
   };
 
-  const withdraw = () => {
+  const withdraw = (amount: number) => {
     withdrawFn({
       abi: depositAbi,
       address: depositAddress,
       functionName: "withdraw",
+      args: [parseUsdc(amount)],
     });
   };
 

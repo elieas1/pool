@@ -9,6 +9,8 @@ import { Providers } from "./Providers";
 import EmptySpace from "@/components/emptySpace/EmptySpace";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Image from "next/image";
+import { Button } from "@nextui-org/react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -27,13 +29,19 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <Providers>
-          <EmptySpace spaceTop={50} />
-          <div className="flex justify-center">
-            <w3m-button balance="hide" />
-          </div>
-          <Web3ModalProvider initialState={initialState}>
-            {children}
-          </Web3ModalProvider>
+          <main>
+            <div className="flex flex-1 w-full justify-center sm:justify-between items-center flex-wrap">
+              <Button className="hidden sm:block learnMore">Learn More</Button>
+              <Image src="/logo.png" width={200} height={200} alt="logo" />
+              <div>
+                <w3m-button balance="hide" />
+              </div>
+            </div>
+            <EmptySpace spaceTop={50} />
+            <Web3ModalProvider initialState={initialState}>
+              {children}
+            </Web3ModalProvider>
+          </main>
         </Providers>
         <ToastContainer />
       </body>

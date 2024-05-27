@@ -3,13 +3,19 @@ import React from "react";
 import Chart from "react-google-charts";
 
 export const options = {
-  colors: ["blue"],
+  colors: ["white"],
   backgroundColor: "transparent",
   vAxis: {
     title: "APR (percent)",
     viewWindow: {
       min: 0,
       max: 25, // Adjust this to provide some padding above the highest point
+    },
+    titleTextStyle: {
+      color: "#ffffff", // Change title text color to white
+    },
+    textStyle: {
+      color: "#ffffff", // Change axis text color to white
     },
     gridlines: {
       count: 3, // Ensure there are enough gridlines for padding
@@ -23,6 +29,12 @@ export const options = {
     },
     gridlines: {
       count: 4, // Ensure there are enough gridlines for padding
+    },
+    titleTextStyle: {
+      color: "#ffffff", // Change title text color to white
+    },
+    textStyle: {
+      color: "#ffffff", // Change axis text color to white
     },
   },
   chartArea: {
@@ -55,7 +67,11 @@ const LineChart = ({
   }
 
   return (
-    <Card className="min-h-[300px]" isBlurred>
+    <Card
+      style={{ backgroundColor: "#2E334B" }}
+      className="min-h-[300px]"
+      isBlurred
+    >
       <CardBody>
         <Chart
           chartType="LineChart"

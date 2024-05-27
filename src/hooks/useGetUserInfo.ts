@@ -1,5 +1,5 @@
 import { depositAbi, depositAddress } from "@/utils/depositContract";
-import { parseUsdc } from "@/utils/functions";
+import { formatUsdc, parseUsdc } from "@/utils/functions";
 import { useAccount, useReadContract } from "wagmi";
 
 type response = {
@@ -11,6 +11,7 @@ type response = {
         claimableRewards: bigint;
         claimedRewards: bigint;
         withdrawApproved: boolean;
+        withrawalRequestAmount: bigint;
       }
     | undefined;
   isLoading: boolean;
@@ -35,14 +36,16 @@ const useGetUserInfo = () => {
     args: [address],
   });
 
-  const pendingAmount = parseUsdc(Number(userData?.pendingAmount) || 0);
-  const depositedAmount = parseUsdc(Number(userData?.amount) || 0);
-  const withdrawableAmount = parseUsdc(
+  const pendingAmount = formatUsdc(Number(userData?.pendingAmount) || 0);
+  const depositedAmount = formatUsdc(Number(userData?.amount) || 0);
+  const withdrawableAmount = formatUsdc(
     Number(userData?.withdrawableAmount) || 0
   );
-  const claimableRewards = parseUsdc(Number(userData?.claimableRewards) || 0);
-  const claimedRewards = parseUsdc(Number(userData?.claimedRewards) || 0);
+  const claimableRewards = formatUsdc(Number(userData?.claimableRewards) || 0);
+  const claimedRewards = formatUsdc(Number(userData?.claimedRewards) || 0);
   const withdrawApproved = userData?.withdrawApproved || false;
+  const withrawalRequestAmount =
+    formatUsdc(Number(userData?.withrawalRequestAmount)) || 0;
 
   return {
     pendingAmount,
@@ -55,6 +58,7 @@ const useGetUserInfo = () => {
     isErrorUserData,
     refetchUserData,
     isSuccesUserData,
+    withrawalRequestAmount,
   };
 };
 

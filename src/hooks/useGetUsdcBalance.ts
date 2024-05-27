@@ -29,8 +29,8 @@ const useGetUsdcBalance = ({ address }: Props) => {
     ],
   });
 
-  const { result: userBalance } = data?.[0] ?? {};
-  const { result: contractBalance } = data?.[1] ?? {};
+  const { result: userBalance = 0 } = data?.[0] ?? {};
+  const { result: contractBalance = 0 } = data?.[1] ?? {};
 
   return {
     userBalance: parseUsdc(Number(userBalance)),
