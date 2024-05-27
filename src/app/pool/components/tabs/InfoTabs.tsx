@@ -115,15 +115,15 @@ const InfoTabs = ({
         <Tabs fullWidth className="w-full">
           <Tab key="deposit" title="Deposit">
             <div style={{ color: "white" }} className="flex gap-2">
-              <div>
+              <div className="w-full">
                 <Input
                   isRequired
                   type="number"
                   label="Amount"
                   defaultValue="0"
-                  max={1000}
+                  fullWidth
                   value={amount + ""}
-                  className="max-w-xs h-[60px]"
+                  className="h-[60px]"
                   onChange={handleChangeAmount}
                 />
                 <EmptySpace spaceTop={5} />
@@ -149,7 +149,7 @@ const InfoTabs = ({
               <Button
                 onClick={() => onDeposit(parseUsdc(amount))}
                 variant="shadow"
-                className="h-[60px]"
+                className="w-[150px] h-[57px]"
                 color="primary"
                 isLoading={isLoadingDeposit}
                 isDisabled={amount === 0}
@@ -167,14 +167,15 @@ const InfoTabs = ({
               {getWithdrawMessage()}
               <EmptySpace spaceTop={10} />
               <div className="flex gap-2">
-                <div className="flex-1">
+                <div className="w-full">
                   <Input
                     isRequired
                     type="number"
                     label="Amount"
                     defaultValue="0"
+                    fullWidth
                     value={withdrawAmount + ""}
-                    className="max-w-xs h-[60px]"
+                    className="h-[60px]"
                     onChange={handleChangeAmount}
                   />
                   <EmptySpace spaceTop={5} />
@@ -199,7 +200,7 @@ const InfoTabs = ({
                 </div>
                 <Button
                   variant="shadow"
-                  className="w-[100px] text-wrap h-[60px]"
+                  className="w-[150px] text-wrap h-[60px]"
                   isDisabled={hasUserRequestedWithdraw || totalAmount === 0}
                   color="danger"
                   onClick={handleWithdrawClick}

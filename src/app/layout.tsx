@@ -11,6 +11,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Image from "next/image";
 import { Button } from "@nextui-org/react";
+import Link from "next/link";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,6 +26,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const initialState = cookieToInitialState(config, headers().get("cookie"));
+
   return (
     <html lang="en">
       <body className={inter.className}>
@@ -32,7 +34,9 @@ export default function RootLayout({
           <main>
             <div className="flex flex-1 w-full justify-center sm:justify-between items-center flex-wrap">
               <Button className="hidden sm:block learnMore">Learn More</Button>
-              <Image src="/logo.png" width={200} height={200} alt="logo" />
+              <Link href="/">
+                <Image src="/logo.png" width={200} height={200} alt="logo" />
+              </Link>
               <div>
                 <w3m-button balance="hide" />
               </div>
