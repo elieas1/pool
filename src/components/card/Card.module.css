@@ -6,6 +6,7 @@
 
 .value {
   font-size: 0.9rem;
+  color: white;
 }
 
 .property {
@@ -20,5 +21,5 @@
 
 .title {
   font-weight: bold;
-  font-size: 1.5rem;
+  font-size: 1.4rem;
 }

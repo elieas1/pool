@@ -18,7 +18,7 @@ export default function Home() {
   };
 
   return (
-    <Skeleton style={{ borderRadius: "25px" }} isLoaded>
+    <Skeleton style={{ borderRadius: "25px" }} isLoaded={isSuccesUserData}>
       <CardItem
         title="Numerical Stable Engine V1"
         imageSource="/vault.png"

@@ -45,7 +45,7 @@ const CardItem = ({
           )}
           <div className="flex flex-[2] flex-col justify-between pl-3">
             <div className={classes.title}>{title}</div>
-            <div>
+            <div style={{ color: "white" }}>
               This Vault Employs Dynamic Strategies To Optimize Real Yield
               Stable-Coin Based Earnings
             </div>

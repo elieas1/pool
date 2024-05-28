@@ -43,7 +43,7 @@ const useGetInfo = () => {
   const { result: totalDepositBigInt } = data?.[0] ?? {};
   const { result: rewardHistory } = data?.[1] ?? {};
   const { result: withdrawRequests } = data?.[2] ?? {};
-  const totalDeposited = formatUsdc(Number(totalDepositBigInt));
+  const totalDeposited = formatUsdc(Number(totalDepositBigInt)) || 0;
 
   return {
     totalDeposited,
