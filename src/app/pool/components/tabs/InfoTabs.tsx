@@ -173,40 +173,53 @@ const InfoTabs = ({
                     defaultValue="0"
                     fullWidth
                     value={withdrawAmount + ""}
+                    max={totalAmount - withrawalRequestAmount}
                     className="h-[60px]"
                     onChange={handleChangeAmount}
                   />
                   <EmptySpace spaceTop={5} />
                   <div className="flex gap-1 items-center">
                     <PercentButton
-                      onClick={() => setWithdrawAmount(totalAmount * 0.25)}
+                      onClick={() =>
+                        setWithdrawAmount(
+                          (totalAmount - withrawalRequestAmount) * 0.25
+                        )
+                      }
                       percent={25}
                     />
                     <PercentButton
-                      onClick={() => setWithdrawAmount(totalAmount * 0.5)}
+                      onClick={() =>
+                        setWithdrawAmount(
+                          (totalAmount - withrawalRequestAmount) * 0.5
+                        )
+                      }
                       percent={50}
                     />
                     <PercentButton
-                      onClick={() => setWithdrawAmount(totalAmount * 0.75)}
+                      onClick={() =>
+                        setWithdrawAmount(
+                          (totalAmount - withrawalRequestAmount) * 0.75
+                        )
+                      }
                       percent={75}
                     />
                     <PercentButton
-                      onClick={() => setWithdrawAmount(totalAmount)}
+                      onClick={() =>
+                        setWithdrawAmount(totalAmount - withrawalRequestAmount)
+                      }
                       percent={100}
                     />
                   </div>
                 </div>
                 <Button
-                  variant="shadow"
-                  className="w-[150px] text-wrap h-[60px]"
-                  isDisabled={hasUserRequestedWithdraw || totalAmount === 0}
-                  color="danger"
                   onClick={handleWithdrawClick}
+                  className="learnMore w-[150px] h-[57px]"
                   isLoading={
                     isLoadingRequestWithdraw ||
                     isLoadingCancelWithdraw ||
                     isLoadingWithdraw
                   }
+                  isDisabled={totalAmount === 0 || withdrawAmount === 0}
                 >
                   {hasUserRequestedWithdraw || withdrawApproved
                     ? "Withdraw"
@@ -218,12 +231,12 @@ const InfoTabs = ({
           <Tab key="claim" title="Claim">
             <div style={{ color: "white" }}>
               <div className="flex justify-between p-5">
-                <div>Claimed Rewards:</div>
+                <div>Claimed Rewards</div>
                 <div>{claimedRewards} USDC</div>
               </div>
               <div className="flex justify-between p-5">
                 <div>
-                  <div>Claimable Rewards:</div>
+                  <div>Claimable Rewards</div>
                   <EmptySpace spaceTop={10} />
                   <div className="flex gap-3">
                     <Button
@@ -234,15 +247,14 @@ const InfoTabs = ({
                       isLoading={isLoadingClaim}
                       onClick={onClaim}
                     >
-                      Claim Now
+                      Claim
                     </Button>
                     <Button
                       isDisabled={
                         claimableRewards === 0 || hasUserRequestedWithdraw
                       }
                       variant="shadow"
-                      style={{ color: "white" }}
-                      color="warning"
+                      style={{ color: "white", backgroundColor: "#7878fe" }}
                       isLoading={isLoadingReDeposit}
                       onClick={onReDeposit}
                     >

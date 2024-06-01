@@ -12,6 +12,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Image from "next/image";
 import { Button } from "@nextui-org/react";
 import Link from "next/link";
+import Web3Button from "@/components/web3Button/Web3Button";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -32,17 +33,20 @@ export default function RootLayout({
       <body className={inter.className}>
         <Providers>
           <main>
-            <div className="flex flex-1 w-full justify-center sm:justify-between items-center flex-wrap">
-              <Button className="hidden sm:block learnMore">Learn More</Button>
-              <Link href="/">
-                <Image src="/logo.png" width={200} height={200} alt="logo" />
-              </Link>
-              <div>
-                <w3m-button balance="hide" />
-              </div>
-            </div>
-            <EmptySpace spaceTop={50} />
             <Web3ModalProvider initialState={initialState}>
+              <div className="flex flex-1 w-full justify-center sm:justify-between items-center flex-wrap">
+                <Button className="hidden sm:block learnMore">
+                  Learn More
+                </Button>
+                <Link href="/">
+                  <Image src="/logo.png" width={200} height={200} alt="logo" />
+                </Link>
+                <div>
+                  <Web3Button />
+                  {/* <w3m-button balance="hide" /> */}
+                </div>
+              </div>
+              <EmptySpace spaceTop={50} />
               {children}
             </Web3ModalProvider>
           </main>
