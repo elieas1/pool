@@ -11,7 +11,7 @@ const useGetUsdcBalance = ({ address }: Props) => {
   const {
     data,
     refetch: refetchBalances,
-    isSuccess: isSuccessLoadingBalance,
+    isLoading: isLoadingBalances,
   } = useReadContracts({
     contracts: [
       {
@@ -36,7 +36,7 @@ const useGetUsdcBalance = ({ address }: Props) => {
     userBalance: parseUsdc(Number(userBalance)),
     contractBalance: parseUsdc(Number(contractBalance)),
     refetchBalances,
-    isSuccessLoadingBalance,
+    isLoadingBalances,
   };
 };
 

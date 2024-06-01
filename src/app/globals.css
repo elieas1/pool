@@ -28,6 +28,7 @@ main {
   color: white;
   background-color: transparent;
   border: 2px solid #7878fe;
+  text-wrap: wrap;
 }
 
 .learnMore:hover {

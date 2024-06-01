@@ -51,18 +51,18 @@ const CardItem = ({
             </div>
 
             <div>
-              <div className={classes.property}>My Deposit</div>
-              <div className={classes.value}>{userDeposit} USDC</div>
+              <div className={classes.property}>APR</div>
+              <div className={classes.value}>{apr} %</div>
             </div>
 
             <div className="flex gap-5">
               <div>
-                <div className={classes.property}>Deposited</div>
+                <div className={classes.property}>TVL</div>
                 <div className={classes.value}>{totalDeposited} USDC</div>
               </div>
               <div>
-                <div className={classes.property}>APR</div>
-                <div className={classes.value}>{apr} %</div>
+                <div className={classes.property}>My Deposit</div>
+                <div className={classes.value}>{userDeposit} USDC</div>
               </div>
             </div>
           </div>

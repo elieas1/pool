@@ -1,15 +1,14 @@
 "use client";
 import CardItem from "@/components/card/Card";
-import EmptySpace from "@/components/emptySpace/EmptySpace";
 import useGetInfo from "@/hooks/useGetInfo";
 import useGetUserInfo from "@/hooks/useGetUserInfo";
-import { Button, Skeleton } from "@nextui-org/react";
-import Image from "next/image";
+import { Skeleton } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
 
 export default function Home() {
   const { totalDeposited } = useGetInfo();
-  const { pendingAmount, depositedAmount, isSuccesUserData } = useGetUserInfo();
+  const { pendingAmount, depositedAmount, isLoadingUserData } =
+    useGetUserInfo();
 
   const { push } = useRouter();
 
@@ -18,7 +17,7 @@ export default function Home() {
   };
 
   return (
-    <Skeleton style={{ borderRadius: "25px" }} isLoaded={isSuccesUserData}>
+    <Skeleton style={{ borderRadius: "25px" }} isLoaded={!isLoadingUserData}>
       <CardItem
         title="Numerical Stable Engine V1"
         imageSource="/vault.png"

@@ -7,6 +7,7 @@ const useGetInfo = () => {
     data,
     refetch: refetchInfo,
     isSuccess: isSuccessInfo,
+    isLoading: isLoadingInfo,
   }: {
     data:
       | [
@@ -24,6 +25,7 @@ const useGetInfo = () => {
       | undefined;
     refetch: () => void;
     isSuccess: boolean;
+    isLoading: boolean;
   } = useReadContracts({
     contracts: [
       {
@@ -51,6 +53,7 @@ const useGetInfo = () => {
     withdrawRequests,
     refetchInfo,
     isSuccessInfo,
+    isLoadingInfo,
   };
 };
 

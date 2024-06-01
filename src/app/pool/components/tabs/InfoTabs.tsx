@@ -148,9 +148,7 @@ const InfoTabs = ({
               </div>
               <Button
                 onClick={() => onDeposit(parseUsdc(amount))}
-                variant="shadow"
-                className="w-[150px] h-[57px]"
-                color="primary"
+                className="learnMore w-[150px] h-[57px]"
                 isLoading={isLoadingDeposit}
                 isDisabled={amount === 0}
               >

@@ -21,13 +21,14 @@ const Page = () => {
     rewardHistory,
     withdrawRequests,
     refetchInfo,
-    isSuccessInfo,
+    isLoadingInfo,
   } = useGetInfo();
 
-  const { userBalance, refetchBalances, isSuccessLoadingBalance } =
-    useGetUsdcBalance({
+  const { userBalance, refetchBalances, isLoadingBalances } = useGetUsdcBalance(
+    {
       address,
-    });
+    }
+  );
 
   const {
     deposit,
@@ -59,7 +60,6 @@ const Page = () => {
   } = useWithdrawDeposit();
 
   const {
-    isSuccesUserData,
     pendingAmount,
     depositedAmount,
     claimableRewards,
@@ -68,6 +68,7 @@ const Page = () => {
     withdrawApproved,
     refetchUserData,
     withrawalRequestAmount,
+    isLoadingUserData,
   } = useGetUserInfo();
 
   useEffect(() => {
@@ -130,7 +131,10 @@ const Page = () => {
   return (
     <div className={`${classes.wrapper}`}>
       <div className="flex-1 flex flex-col gap-2">
-        <Skeleton className="rounded-medium" isLoaded={isSuccessLoadingBalance}>
+        <Skeleton
+          className="rounded-medium"
+          isLoaded={!isLoadingBalances || !address}
+        >
           <Card style={{ backgroundColor: "#2E334B" }} isBlurred>
             <CardBody>
               <div
@@ -143,10 +147,16 @@ const Page = () => {
             </CardBody>
           </Card>
         </Skeleton>
-        <Skeleton className="rounded-medium" isLoaded={isSuccesUserData}>
+        <Skeleton
+          className="rounded-medium"
+          isLoaded={!isLoadingUserData || !address}
+        >
           <Deposits approved={depositedAmount} pending={pendingAmount} />
         </Skeleton>
-        <Skeleton className="rounded-medium" isLoaded={isSuccesUserData}>
+        <Skeleton
+          className="rounded-medium"
+          isLoaded={!isLoadingUserData || !address}
+        >
           <InfoTabs
             claimableRewards={claimableRewards}
             claimedRewards={claimedRewards}
@@ -174,15 +184,18 @@ const Page = () => {
         </Skeleton>
       </div>
       <div className="flex-1 flex flex-col gap-2">
-        <Skeleton className="rounded-medium" isLoaded={isSuccessInfo}>
+        <Skeleton
+          className="rounded-medium"
+          isLoaded={!isLoadingInfo || !address}
+        >
           <Card style={{ backgroundColor: "#2E334B" }} isBlurred>
             <CardBody style={{ color: "white" }}>
               <div className="flex justify-between p-5">
-                <div>Total Deposits:</div>
+                <div>TVL</div>
                 <div>{totalDeposited} USDC</div>
               </div>
               <div className="flex justify-between p-5">
-                <div>APR:</div>
+                <div>APR</div>
                 <div>{getApr()} %</div>
               </div>
             </CardBody>

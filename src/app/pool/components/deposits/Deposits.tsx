@@ -14,7 +14,10 @@ const Deposits = ({ approved, pending }: Props) => {
         <div style={{ color: "white" }} className="flex justify-between p-5">
           <div className="flex gap-2">
             Pending Deposit
-            <Tooltip content="Pending amount requires admin approval before being included in the deposited pool">
+            <Tooltip
+              style={{ color: "black" }}
+              content="USDC amount that will be added to the next epoch"
+            >
               <div className={classes.tooltip}>?</div>
             </Tooltip>
           </div>
@@ -22,7 +25,15 @@ const Deposits = ({ approved, pending }: Props) => {
         </div>
 
         <div style={{ color: "white" }} className="flex justify-between p-5">
-          <div>Approved Deposit</div>
+          <div className="flex gap-2">
+            Approved Deposit
+            <Tooltip
+              style={{ color: "black" }}
+              content="USDC amount that is currently earning yield"
+            >
+              <div className={classes.tooltip}>?</div>
+            </Tooltip>
+          </div>
           <div>{approved} USDC</div>
         </div>
       </CardBody>
