@@ -1,5 +1,5 @@
 import { depositAbi, depositAddress } from "@/utils/depositContract";
-import { parseUsdc } from "@/utils/functions";
+import { formatUsdc } from "@/utils/functions";
 import { usdcAbi, usdcAddress } from "@/utils/usdcContract";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
@@ -13,7 +13,7 @@ const useDepositActions = () => {
     args: [usdcAddress, depositAddress],
   });
 
-  const allowance = parseUsdc(Number(data));
+  const allowance = formatUsdc(Number(data));
 
   const {
     writeContract: approveUsdc,
@@ -39,14 +39,18 @@ const useDepositActions = () => {
     }
   }, [isErrorApprove, isErrorDeposit]);
 
+  const approveAmount = (amount: number) => {
+    approveUsdc({
+      abi: usdcAbi,
+      address: usdcAddress,
+      functionName: "approve",
+      args: [depositAddress, amount],
+    });
+  };
+
   const deposit = (amount: number) => {
-    if (parseUsdc(allowance) < amount) {
-      approveUsdc({
-        abi: usdcAbi,
-        address: usdcAddress,
-        functionName: "approve",
-        args: [depositAddress, amount],
-      });
+    if (allowance < amount) {
+      approveAmount(amount);
     } else {
       writeContract({
         abi: depositAbi,
@@ -63,6 +67,7 @@ const useDepositActions = () => {
     isLoadingDeposit,
     isLoadingApprove,
     isSuccessApprove,
+    approveAmount,
   };
 };
 

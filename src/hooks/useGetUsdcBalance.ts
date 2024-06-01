@@ -1,5 +1,5 @@
 import { depositAddress } from "@/utils/depositContract";
-import { parseUsdc } from "@/utils/functions";
+import { formatUsdc } from "@/utils/functions";
 import { usdcAbi, usdcAddress } from "@/utils/usdcContract";
 import { useReadContracts } from "wagmi";
 
@@ -33,8 +33,8 @@ const useGetUsdcBalance = ({ address }: Props) => {
   const { result: contractBalance = 0 } = data?.[1] ?? {};
 
   return {
-    userBalance: parseUsdc(Number(userBalance)),
-    contractBalance: parseUsdc(Number(contractBalance)),
+    userBalance: formatUsdc(Number(userBalance)),
+    contractBalance: formatUsdc(Number(contractBalance)),
     refetchBalances,
     isLoadingBalances,
   };

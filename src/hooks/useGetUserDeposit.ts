@@ -1,5 +1,5 @@
 import { depositAbi, depositAddress } from "@/utils/depositContract";
-import { parseUsdc } from "@/utils/functions";
+import { formatUsdc } from "@/utils/functions";
 import { useReadContract } from "wagmi";
 
 type Props = {
@@ -54,14 +54,14 @@ const useGetUserDeposit = ({ searchValue }: Props) => {
   } = userInfo ?? {};
 
   return {
-    amount: parseUsdc(Number(amount)),
-    claimableRewards: parseUsdc(Number(claimableRewards)),
-    claimedRewards: parseUsdc(Number(claimedRewards)),
+    amount: formatUsdc(Number(amount)),
+    claimableRewards: formatUsdc(Number(claimableRewards)),
+    claimedRewards: formatUsdc(Number(claimedRewards)),
     initialDepositTime,
-    pendingAmount: parseUsdc(Number(pendingAmount)),
+    pendingAmount: formatUsdc(Number(pendingAmount)),
     reDepositTime,
     withdrawApproved,
-    withdrawableAmount: parseUsdc(Number(withdrawableAmount)),
+    withdrawableAmount: formatUsdc(Number(withdrawableAmount)),
     refetch,
     isRefetching,
     isLoadingUserDeposit,

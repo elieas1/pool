@@ -1,5 +1,5 @@
 import { depositAbi, depositAddress } from "@/utils/depositContract";
-import { parseUsdc } from "@/utils/functions";
+import { formatUsdc } from "@/utils/functions";
 import { useReadContracts } from "wagmi";
 
 const useGetAdminData = () => {
@@ -64,8 +64,8 @@ const useGetAdminData = () => {
   const { result: successfullyDeposited } = data?.[4] ?? {};
   const { result: awaitingApproval } = data?.[5] ?? {};
 
-  const totalDeposited = parseUsdc(Number(totalDepositedBigInt));
-  const totalWithdrawAmount = parseUsdc(Number(withdrawAmount));
+  const totalDeposited = formatUsdc(Number(totalDepositedBigInt));
+  const totalWithdrawAmount = formatUsdc(Number(withdrawAmount));
 
   return {
     totalDeposited,

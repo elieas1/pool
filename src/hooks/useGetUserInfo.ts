@@ -1,5 +1,5 @@
 import { depositAbi, depositAddress } from "@/utils/depositContract";
-import { formatUsdc, parseUsdc } from "@/utils/functions";
+import { formatUsdc } from "@/utils/functions";
 import { useAccount, useReadContract } from "wagmi";
 
 type response = {

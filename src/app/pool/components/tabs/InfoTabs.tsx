@@ -28,6 +28,7 @@ type Props = {
   isLoadingWithdraw: boolean;
   isSuccessApprove: boolean;
   withrawalRequestAmount: number;
+  approveAmount: (amount: number) => void;
 };
 
 const InfoTabs = ({
@@ -53,6 +54,7 @@ const InfoTabs = ({
   isSuccessApprove,
   userBalance,
   withrawalRequestAmount,
+  approveAmount,
 }: Props) => {
   const [amount, setAmount] = useState(0);
   const [withdrawAmount, setWithdrawAmount] = useState(0);
@@ -60,9 +62,9 @@ const InfoTabs = ({
 
   useEffect(() => {
     if (isSuccessApprove) {
-      onDeposit(parseUsdc(amount));
+      approveAmount(parseUsdc(amount));
     }
-  }, [amount, isSuccessApprove, onDeposit]);
+  }, [amount, approveAmount, isSuccessApprove]);
 
   const getWithdrawMessage = () => {
     if (hasUserRequestedWithdraw) {
