@@ -40,6 +40,8 @@ const Page = () => {
     successfullyDeposited,
     awaitingApproval,
     refetchAdminData,
+    isSuccessAdminData,
+    isErrorAdminData,
   } = useGetAdminData();
 
   const {
@@ -52,10 +54,16 @@ const Page = () => {
   } = useAdminActions({ refetchAdminData });
 
   useLayoutEffect(() => {
-    if (address !== ownerAddress || !address) {
+    if (isSuccessAdminData) {
+      if (address !== ownerAddress || !address) {
+        replace("/");
+      }
+    }
+
+    if (isErrorAdminData) {
       replace("/");
     }
-  }, [address, ownerAddress, replace]);
+  }, [address, isErrorAdminData, isSuccessAdminData, ownerAddress, replace]);
 
   const onChangeSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(event.target.value);

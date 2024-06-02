@@ -6,8 +6,8 @@ const useGetAdminData = () => {
   const {
     data,
     refetch: refetchAdminData,
-    isLoading,
-    isError,
+    isSuccess: isSuccessAdminData,
+    isError: isErrorAdminData,
   }: {
     data:
       | [
@@ -22,6 +22,7 @@ const useGetAdminData = () => {
     refetch: () => void;
     isLoading: boolean;
     isError: boolean;
+    isSuccess: boolean;
   } = useReadContracts({
     contracts: [
       {
@@ -75,6 +76,8 @@ const useGetAdminData = () => {
     successfullyDeposited,
     awaitingApproval,
     refetchAdminData,
+    isSuccessAdminData,
+    isErrorAdminData,
   };
 };
 
