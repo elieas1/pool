@@ -36,8 +36,8 @@ const Page = () => {
     isSuccessDeposit,
     isLoadingApprove,
     isSuccessApprove,
-    approveAmount,
-  } = useDepositActions();
+    depositAmount,
+  } = useDepositActions({ address });
 
   const {
     claimRewards,
@@ -181,7 +181,7 @@ const Page = () => {
             isLoadingWithdraw={isLoadingWithdraw}
             userBalance={userBalance}
             withrawalRequestAmount={withrawalRequestAmount}
-            approveAmount={approveAmount}
+            depositAmount={depositAmount}
           />
         </Skeleton>
       </div>

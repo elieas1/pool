@@ -1,16 +1,20 @@
 import { depositAbi, depositAddress } from "@/utils/depositContract";
-import { formatUsdc } from "@/utils/functions";
+import { formatUsdc, parseUsdc } from "@/utils/functions";
 import { usdcAbi, usdcAddress } from "@/utils/usdcContract";
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { toast } from "react-toastify";
 import { useReadContract, useWriteContract } from "wagmi";
 
-const useDepositActions = () => {
-  const { data } = useReadContract({
+const useDepositActions = ({
+  address,
+}: {
+  address: `0x${string}` | undefined;
+}) => {
+  const { data, refetch: refetchAllowance } = useReadContract({
     abi: usdcAbi,
     address: usdcAddress,
     functionName: "allowance",
-    args: [usdcAddress, depositAddress],
+    args: [address, depositAddress],
   });
 
   const allowance = formatUsdc(Number(data));
@@ -39,25 +43,34 @@ const useDepositActions = () => {
     }
   }, [isErrorApprove, isErrorDeposit]);
 
-  const approveAmount = (amount: number) => {
-    approveUsdc({
-      abi: usdcAbi,
-      address: usdcAddress,
-      functionName: "approve",
-      args: [depositAddress, amount],
-    });
-  };
+  useEffect(() => {
+    if (isSuccessApprove) {
+      refetchAllowance();
+    }
+  }, [isSuccessApprove, refetchAllowance]);
 
-  const deposit = (amount: number) => {
-    if (allowance < amount) {
-      approveAmount(amount);
-    } else {
+  const depositAmount = useCallback(
+    (amount: number) => {
       writeContract({
         abi: depositAbi,
         address: depositAddress,
         functionName: "deposit",
-        args: [amount],
+        args: [parseUsdc(amount)],
       });
+    },
+    [writeContract]
+  );
+
+  const deposit = (amount: number) => {
+    if (allowance < amount) {
+      approveUsdc({
+        abi: usdcAbi,
+        address: usdcAddress,
+        functionName: "approve",
+        args: [depositAddress, parseUsdc(amount)],
+      });
+    } else {
+      depositAmount(amount);
     }
   };
 
@@ -67,7 +80,7 @@ const useDepositActions = () => {
     isLoadingDeposit,
     isLoadingApprove,
     isSuccessApprove,
-    approveAmount,
+    depositAmount,
   };
 };
 
