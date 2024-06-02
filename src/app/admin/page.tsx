@@ -10,6 +10,7 @@ import useAdminActions from "@/hooks/useAdminActions";
 
 const Page = () => {
   const [searchValue, setSearchValue] = useState("");
+  const [rewardValue, setRewardValue] = useState(0);
 
   const { address } = useAccount();
 
@@ -38,8 +39,6 @@ const Page = () => {
     successfullyDeposited,
     awaitingApproval,
     refetchAdminData,
-    isSuccessAdminData,
-    isErrorAdminData,
   } = useGetAdminData();
 
   const {
@@ -49,7 +48,7 @@ const Page = () => {
     isLoadingDistributeRewards,
     startNewCycle,
     isLoadingNewCycle,
-  } = useAdminActions({ refetchAdminData });
+  } = useAdminActions({ refetchAdminData, rewardValue });
 
   const isAdmin = address === ownerAddress;
 
@@ -71,6 +70,10 @@ const Page = () => {
 
   const handleApproveWithdraw = () => {
     approveWithdraw();
+  };
+
+  const handleChangeReward = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setRewardValue(parseInt(event.target.value) || 0);
   };
 
   return (
@@ -101,14 +104,23 @@ const Page = () => {
               <div className="p-3">
                 Deposited users amount: {successfullyDeposited?.length}{" "}
               </div>
-              <Button
-                onClick={handleDistributeRewards}
-                isLoading={isLoadingDistributeRewards}
-                variant="shadow"
-                color="warning"
-              >
-                Distribute Rewards
-              </Button>
+              <div className="flex h-[60px]">
+                <Input
+                  value={rewardValue.toString()}
+                  onChange={handleChangeReward}
+                  label="Amount"
+                />
+                <Button
+                  className="text-wrap h-[%]"
+                  onClick={handleDistributeRewards}
+                  isDisabled={rewardValue === 0}
+                  isLoading={isLoadingDistributeRewards}
+                  variant="shadow"
+                  color="warning"
+                >
+                  Distribute Rewards
+                </Button>
+              </div>
             </CardBody>
           </Card>
         </Skeleton>

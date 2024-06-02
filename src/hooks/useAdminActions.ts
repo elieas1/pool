@@ -1,13 +1,15 @@
 import { depositAbi, depositAddress } from "@/utils/depositContract";
+import { parseUsdc } from "@/utils/functions";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
 import { useWriteContract } from "wagmi";
 
 type props = {
   refetchAdminData: () => void;
+  rewardValue: number;
 };
 
-const useAdminActions = ({ refetchAdminData }: props) => {
+const useAdminActions = ({ refetchAdminData, rewardValue }: props) => {
   const {
     writeContract: startNewCycleFn,
     isPending: isLoadingNewCycle,
@@ -83,6 +85,7 @@ const useAdminActions = ({ refetchAdminData }: props) => {
       abi: depositAbi,
       address: depositAddress,
       functionName: "distributeRewards",
+      args: [parseUsdc(rewardValue)],
     });
   };
 
