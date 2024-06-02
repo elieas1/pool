@@ -1,9 +1,8 @@
 "use client";
-import { useRouter } from "next/navigation";
-import React, { useEffect, useLayoutEffect, useState } from "react";
+import React, { useState } from "react";
 import { useAccount } from "wagmi";
 import classes from "./classes.module.css";
-import { Button, Card, CardBody, Input } from "@nextui-org/react";
+import { Button, Card, CardBody, Input, Skeleton } from "@nextui-org/react";
 import useGetAdminData from "@/hooks/useGetAdminData";
 import useGetUsdcBalance from "@/hooks/useGetUsdcBalance";
 import useGetUserDeposit from "@/hooks/useGetUserDeposit";
@@ -13,7 +12,6 @@ const Page = () => {
   const [searchValue, setSearchValue] = useState("");
 
   const { address } = useAccount();
-  const { replace } = useRouter();
 
   const { contractBalance, userBalance } = useGetUsdcBalance({ address });
 
@@ -53,17 +51,7 @@ const Page = () => {
     isLoadingNewCycle,
   } = useAdminActions({ refetchAdminData });
 
-  useLayoutEffect(() => {
-    if (isSuccessAdminData) {
-      if (address !== ownerAddress || !address) {
-        replace("/");
-      }
-    }
-
-    if (isErrorAdminData) {
-      replace("/");
-    }
-  }, [address, isErrorAdminData, isSuccessAdminData, ownerAddress, replace]);
+  const isAdmin = address === ownerAddress;
 
   const onChangeSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(event.target.value);
@@ -88,79 +76,87 @@ const Page = () => {
   return (
     <div className={classes.wrapper}>
       <div className="w-[350px]">
-        <Card isBlurred>
-          <CardBody>
-            <div className="flex justify-between">
-              <div>Contract Balance:</div>
-              <div>{contractBalance} USDC</div>
-            </div>
-            <div className="flex justify-between">
-              <div>My Balance:</div>
-              <div>{userBalance} USDC</div>
-            </div>
-          </CardBody>
-        </Card>
+        <Skeleton style={{ borderRadius: "25px" }} isLoaded={isAdmin}>
+          <Card isBlurred>
+            <CardBody>
+              <div className="flex justify-between">
+                <div>Contract Balance:</div>
+                <div>{contractBalance} USDC</div>
+              </div>
+              <div className="flex justify-between">
+                <div>My Balance:</div>
+                <div>{userBalance} USDC</div>
+              </div>
+            </CardBody>
+          </Card>
+        </Skeleton>
       </div>
       <div className="flex justify-center flex-wrap gap-3">
-        <Card isBlurred>
-          <CardBody className="flex flex-col justify-between">
-            <div className="p-3">
-              Total Deposited Amount: {totalDeposited} USDC
-            </div>
-            <div className="p-3">
-              Deposited users amount: {successfullyDeposited?.length}{" "}
-            </div>
-            <Button
-              onClick={handleDistributeRewards}
-              isLoading={isLoadingDistributeRewards}
-              variant="shadow"
-              color="warning"
-            >
-              Distribute Rewards
-            </Button>
-          </CardBody>
-        </Card>
-        <Card isBlurred>
-          <CardBody className="flex flex-col justify-between">
-            <div className="p-3">
-              Withdraw Requests: {withdrawRequests?.length}
-            </div>
-            <div className="p-3">
-              Withdraw Requests Amount: {totalWithdrawAmount} USDC
-            </div>
-            <div className="p-3">Withdraw Requests (users):</div>
-            {withdrawRequests?.map((addr) => (
-              <div key={addr}>{addr}</div>
-            ))}
-            <Button
-              onClick={handleApproveWithdraw}
-              isLoading={isLoadingApproveWithdraw}
-              variant="shadow"
-              color="warning"
-            >
-              Approve Withdraw Requests
-            </Button>
-          </CardBody>
-        </Card>
-        <Card isBlurred>
-          <CardBody className="flex flex-col justify-between">
-            <div className="p-3">
-              Pending Requests: {awaitingApproval?.length}
-            </div>
-            <div className="p-3">Pending Requests (users):</div>
-            {awaitingApproval?.map((addr) => (
-              <div key={addr}>{addr}</div>
-            ))}
-            <Button
-              isLoading={isLoadingNewCycle}
-              onClick={handleStartNewCycle}
-              variant="shadow"
-              color="warning"
-            >
-              Start New Cycle
-            </Button>
-          </CardBody>
-        </Card>
+        <Skeleton style={{ borderRadius: "25px" }} isLoaded={isAdmin}>
+          <Card isBlurred>
+            <CardBody className="flex flex-col justify-between">
+              <div className="p-3">
+                Total Deposited Amount: {totalDeposited} USDC
+              </div>
+              <div className="p-3">
+                Deposited users amount: {successfullyDeposited?.length}{" "}
+              </div>
+              <Button
+                onClick={handleDistributeRewards}
+                isLoading={isLoadingDistributeRewards}
+                variant="shadow"
+                color="warning"
+              >
+                Distribute Rewards
+              </Button>
+            </CardBody>
+          </Card>
+        </Skeleton>
+        <Skeleton style={{ borderRadius: "25px" }} isLoaded={isAdmin}>
+          <Card isBlurred>
+            <CardBody className="flex flex-col justify-between">
+              <div className="p-3">
+                Withdraw Requests: {withdrawRequests?.length}
+              </div>
+              <div className="p-3">
+                Withdraw Requests Amount: {totalWithdrawAmount} USDC
+              </div>
+              <div className="p-3">Withdraw Requests (users):</div>
+              {withdrawRequests?.map((addr) => (
+                <div key={addr}>{addr}</div>
+              ))}
+              <Button
+                onClick={handleApproveWithdraw}
+                isLoading={isLoadingApproveWithdraw}
+                variant="shadow"
+                color="warning"
+              >
+                Approve Withdraw Requests
+              </Button>
+            </CardBody>
+          </Card>
+        </Skeleton>
+        <Skeleton style={{ borderRadius: "25px" }} isLoaded={isAdmin}>
+          <Card isBlurred>
+            <CardBody className="flex flex-col justify-between">
+              <div className="p-3">
+                Pending Requests: {awaitingApproval?.length}
+              </div>
+              <div className="p-3">Pending Requests (users):</div>
+              {awaitingApproval?.map((addr) => (
+                <div key={addr}>{addr}</div>
+              ))}
+              <Button
+                isLoading={isLoadingNewCycle}
+                onClick={handleStartNewCycle}
+                variant="shadow"
+                color="warning"
+              >
+                Start New Cycle
+              </Button>
+            </CardBody>
+          </Card>
+        </Skeleton>
       </div>
       <Card isBlurred>
         <CardBody>
