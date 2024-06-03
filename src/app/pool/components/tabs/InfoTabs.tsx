@@ -2,7 +2,6 @@ import EmptySpace from "@/components/emptySpace/EmptySpace";
 import { Button, Card, CardBody, Input, Tab, Tabs } from "@nextui-org/react";
 import React, { useEffect, useState } from "react";
 import classes from "./InfoTabs.module.css";
-import { parseUsdc } from "@/utils/functions";
 import PercentButton from "@/components/percentButton/PercentButton";
 
 type Props = {
@@ -19,9 +18,9 @@ type Props = {
   isLoadingDeposit: boolean;
   isLoadingClaim: boolean;
   onReDeposit: () => void;
-  onRequestWithdraw: () => void;
+  onRequestWithdraw: (amount: number) => void;
   onCancelWithdraw: () => void;
-  onWithdraw: (amount: number) => void;
+  onWithdraw: () => void;
   isLoadingReDeposit: boolean;
   isLoadingRequestWithdraw: boolean;
   isLoadingCancelWithdraw: boolean;
@@ -96,6 +95,12 @@ const InfoTabs = ({
     setAmount(parseInt(event.target.value));
   };
 
+  const handleChangeWithdrawAmount = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setWithdrawAmount(parseInt(event.target.value));
+  };
+
   const handleWithdrawClick = () => {
     if (hasUserRequestedWithdraw) {
       onCancelWithdraw();
@@ -103,11 +108,11 @@ const InfoTabs = ({
     }
 
     if (withdrawApproved) {
-      onWithdraw(withdrawAmount);
+      onWithdraw();
       return;
     }
 
-    onRequestWithdraw();
+    onRequestWithdraw(withdrawAmount);
     return;
   };
 
@@ -177,7 +182,7 @@ const InfoTabs = ({
                     value={withdrawAmount + ""}
                     max={totalAmount - withrawalRequestAmount}
                     className="h-[60px]"
-                    onChange={handleChangeAmount}
+                    onChange={handleChangeWithdrawAmount}
                   />
                   <EmptySpace spaceTop={5} />
                   <div className="flex gap-1 items-center">

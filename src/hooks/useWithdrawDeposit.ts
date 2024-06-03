@@ -40,11 +40,12 @@ const useWithdrawDeposit = () => {
     }
   }, [isErrorCancelWithdraw, isErrorWithdraw, isErrorWithdrawRequest]);
 
-  const requestWithdraw = () => {
+  const requestWithdraw = (amount: number) => {
     requestWithdrawFn({
       abi: depositAbi,
       address: depositAddress,
       functionName: "requestWithdraw",
+      args: [parseUsdc(amount)],
     });
   };
 
@@ -56,12 +57,11 @@ const useWithdrawDeposit = () => {
     });
   };
 
-  const withdraw = (amount: number) => {
+  const withdraw = () => {
     withdrawFn({
       abi: depositAbi,
       address: depositAddress,
       functionName: "withdraw",
-      args: [parseUsdc(amount)],
     });
   };
 
