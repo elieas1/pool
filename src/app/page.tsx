@@ -6,7 +6,7 @@ import { Skeleton } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
 
 export default function Home() {
-  const { totalDeposited } = useGetInfo();
+  const { totalDeposited, rewardHistory } = useGetInfo();
   const { pendingAmount, depositedAmount, isLoadingUserData } =
     useGetUserInfo();
 
@@ -16,13 +16,23 @@ export default function Home() {
     push("/pool");
   };
 
+  const lastEpoch = rewardHistory?.[rewardHistory.length - 1];
+
+  const { adminBalance, epochTime, reward, totalDeposit } = lastEpoch ?? {};
+  const apr =
+    rewardHistory?.length! > 0
+      ? ((adminBalance! + reward! - totalDeposit!) / totalDeposit!) *
+        (365 / (epochTime! / 86400)) *
+        100
+      : 0;
+
   return (
     <Skeleton style={{ borderRadius: "25px" }} isLoaded={!isLoadingUserData}>
       <CardItem
         title="Numerical Stable Engine V1"
         imageSource="/vault.png"
         totalDeposited={totalDeposited}
-        apr={0}
+        apr={apr}
         onPress={navigateToPool}
         userDeposit={depositedAmount + pendingAmount}
       />
