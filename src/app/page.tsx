@@ -21,8 +21,9 @@ export default function Home() {
   const { adminBalance, epochTime, reward, totalDeposit } = lastEpoch ?? {};
   const apr =
     rewardHistory?.length! > 0
-      ? ((adminBalance! + reward! - totalDeposit!) / totalDeposit!) *
-        (365 / (epochTime! / 86400)) *
+      ? ((Number(adminBalance!) + Number(reward!) - Number(totalDeposit!)) /
+          Number(totalDeposit!)) *
+        (365 / (Number(epochTime!) / 86400)) *
         100
       : 0;
 
