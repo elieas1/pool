@@ -11,6 +11,7 @@ import useAdminActions from "@/hooks/useAdminActions";
 const Page = () => {
   const [searchValue, setSearchValue] = useState("");
   const [rewardValue, setRewardValue] = useState(0);
+  const [adminWalletValue, setAdminWalletValue] = useState(0);
 
   const { address } = useAccount();
 
@@ -48,7 +49,7 @@ const Page = () => {
     isLoadingDistributeRewards,
     startNewCycle,
     isLoadingNewCycle,
-  } = useAdminActions({ refetchAdminData, rewardValue });
+  } = useAdminActions({ refetchAdminData, rewardValue, adminWalletValue });
 
   const isAdmin = address === ownerAddress;
 
@@ -74,6 +75,12 @@ const Page = () => {
 
   const handleChangeReward = (event: React.ChangeEvent<HTMLInputElement>) => {
     setRewardValue(parseInt(event.target.value) || 0);
+  };
+
+  const handleChangeAdminWallet = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setAdminWalletValue(parseInt(event.target.value) || 0);
   };
 
   return (
@@ -104,11 +111,16 @@ const Page = () => {
               <div className="p-3">
                 Deposited users amount: {successfullyDeposited?.length}{" "}
               </div>
-              <div className="flex h-[60px]">
+              <div className="flex h-[60px] gap-2">
                 <Input
                   value={rewardValue.toString()}
                   onChange={handleChangeReward}
                   label="Amount"
+                />
+                <Input
+                  value={rewardValue.toString()}
+                  onChange={handleChangeAdminWallet}
+                  label="Admin Wallet"
                 />
                 <Button
                   className="text-wrap h-[%]"

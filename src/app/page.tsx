@@ -2,6 +2,7 @@
 import CardItem from "@/components/card/Card";
 import useGetInfo from "@/hooks/useGetInfo";
 import useGetUserInfo from "@/hooks/useGetUserInfo";
+import { formatUsdc } from "@/utils/functions";
 import { Skeleton } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
 
@@ -18,11 +19,21 @@ export default function Home() {
 
   const lastEpoch = rewardHistory?.[rewardHistory.length - 1];
 
-  const { adminBalance, epochTime, reward, totalDeposit } = lastEpoch ?? {};
+  const { adminBalance, epochTime, totalDeposit } = lastEpoch ?? {};
+
+  const formattedAdminBalance = Number(adminBalance!);
+  const formattedTotalDeposit = formatUsdc(Number(totalDeposit!));
+
+  console.log({
+    formattedAdminBalance,
+    formattedTotalDeposit,
+    epoch: Number(epochTime!) / 86400,
+  });
+
   const apr =
     rewardHistory?.length! > 0
-      ? ((Number(adminBalance!) + Number(reward!) - Number(totalDeposit!)) /
-          Number(totalDeposit!)) *
+      ? ((formattedAdminBalance - formattedTotalDeposit) /
+          formattedTotalDeposit) *
         (365 / (Number(epochTime!) / 86400)) *
         100
       : 0;

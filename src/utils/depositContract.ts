@@ -1,4 +1,4 @@
-export const depositAddress = "0x9586e79640937b3784092d50F17075Dc305dCAF0";
+export const depositAddress = "0x8F57efdb175aBd9D02A61Cc39BE8B30dA1e5640D";
 
 export const depositAbi = [
   {
@@ -53,6 +53,11 @@ export const depositAbi = [
       {
         internalType: "uint256",
         name: "amount",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "adminBalance",
         type: "uint256",
       },
     ],

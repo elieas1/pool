@@ -7,9 +7,14 @@ import { useWriteContract } from "wagmi";
 type props = {
   refetchAdminData: () => void;
   rewardValue: number;
+  adminWalletValue: number;
 };
 
-const useAdminActions = ({ refetchAdminData, rewardValue }: props) => {
+const useAdminActions = ({
+  refetchAdminData,
+  rewardValue,
+  adminWalletValue,
+}: props) => {
   const {
     writeContract: startNewCycleFn,
     isPending: isLoadingNewCycle,
@@ -85,7 +90,8 @@ const useAdminActions = ({ refetchAdminData, rewardValue }: props) => {
       abi: depositAbi,
       address: depositAddress,
       functionName: "distributeRewards",
-      args: [parseUsdc(rewardValue)],
+      // adminWalletValue is in dollars, no need to parse it
+      args: [parseUsdc(rewardValue), adminWalletValue],
     });
   };
 
