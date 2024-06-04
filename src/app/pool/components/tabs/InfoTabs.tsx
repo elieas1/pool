@@ -66,27 +66,45 @@ const InfoTabs = ({
   }, [amount, depositAmount, isSuccessApprove]);
 
   const getWithdrawMessage = () => {
-    if (hasUserRequestedWithdraw) {
-      return (
-        <div className="flex justify-between p-5">
-          <div>Pending Amount</div>
-          <div>{withrawalRequestAmount} USDC</div>
-        </div>
-      );
-    }
-
-    if (withdrawApproved) {
-      return (
-        <div className="flex justify-between p-5">
-          <div>Withdrawable amount</div>
-          <div>{withdrawableAmount} USDC</div>
-        </div>
-      );
-    }
     return (
-      <div className="flex justify-between p-5">
-        <div>My total deposit</div>
-        <div>{totalAmount} USDC</div>
+      <div>
+        <div className="flex justify-between p-5">
+          <div>My Total Deposit</div>
+
+          <div>{totalAmount} USDC</div>
+        </div>
+        {hasUserRequestedWithdraw && (
+          <div className="flex justify-between items-center p-5">
+            <div>Pending Withdraw</div>
+            <div className="flex gap-2 items-center">
+              <div>{withrawalRequestAmount} USDC</div>
+              <Button
+                onClick={onCancelWithdraw}
+                isDisabled={withrawalRequestAmount === 0}
+                isLoading={isLoadingCancelWithdraw}
+                className="learnMore w-[70px] h-[57px]"
+              >
+                Cancel Withdraw
+              </Button>
+            </div>
+          </div>
+        )}
+        {withdrawApproved && (
+          <div className="flex justify-between p-5">
+            <div>Withdrawable Amount</div>
+            <div className="flex gap-2 items-start">
+              <div>{withdrawableAmount} USDC</div>
+              <Button
+                onClick={onWithdraw}
+                isDisabled={withdrawableAmount === 0}
+                isLoading={isLoadingWithdraw}
+                className="learnMore w-[70px] h-[57px]"
+              >
+                Withdraw
+              </Button>
+            </div>
+          </div>
+        )}
       </div>
     );
   };
@@ -102,18 +120,7 @@ const InfoTabs = ({
   };
 
   const handleWithdrawClick = () => {
-    if (hasUserRequestedWithdraw) {
-      onCancelWithdraw();
-      return;
-    }
-
-    if (withdrawApproved) {
-      onWithdraw();
-      return;
-    }
-
     onRequestWithdraw(withdrawAmount);
-    return;
   };
 
   return (
@@ -221,11 +228,7 @@ const InfoTabs = ({
                 <Button
                   onClick={handleWithdrawClick}
                   className="learnMore w-[150px] h-[57px]"
-                  isLoading={
-                    isLoadingRequestWithdraw ||
-                    isLoadingCancelWithdraw ||
-                    isLoadingWithdraw
-                  }
+                  isLoading={isLoadingRequestWithdraw}
                   isDisabled={totalAmount === 0 || withdrawAmount === 0}
                 >
                   {hasUserRequestedWithdraw || withdrawApproved
