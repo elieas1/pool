@@ -231,9 +231,7 @@ const InfoTabs = ({
                   isLoading={isLoadingRequestWithdraw}
                   isDisabled={totalAmount === 0 || withdrawAmount === 0}
                 >
-                  {hasUserRequestedWithdraw || withdrawApproved
-                    ? "Withdraw"
-                    : "Request Withdraw"}
+                  Request Withdraw
                 </Button>
               </div>
             </div>

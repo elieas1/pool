@@ -118,7 +118,7 @@ const Page = () => {
                   label="Amount"
                 />
                 <Input
-                  value={rewardValue.toString()}
+                  value={adminWalletValue.toString()}
                   onChange={handleChangeAdminWallet}
                   label="Admin Wallet"
                 />
