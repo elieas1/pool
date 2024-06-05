@@ -16,7 +16,8 @@ const useGetAdminData = () => {
           { result: `0x${string}` },
           { result: number },
           { result: `0x${string}`[] },
-          { result: `0x${string}`[] }
+          { result: `0x${string}`[] },
+          { result: number }
         ]
       | undefined;
     refetch: () => void;
@@ -55,6 +56,11 @@ const useGetAdminData = () => {
         address: depositAddress,
         functionName: "getAwaitingApproval",
       },
+      {
+        abi: depositAbi,
+        address: depositAddress,
+        functionName: "totalPending",
+      },
     ],
   });
 
@@ -64,9 +70,11 @@ const useGetAdminData = () => {
   const { result: withdrawAmount } = data?.[3] ?? {};
   const { result: successfullyDeposited } = data?.[4] ?? {};
   const { result: awaitingApproval } = data?.[5] ?? {};
+  const { result: totalPendingBigInt } = data?.[6] ?? {};
 
   const totalDeposited = formatUsdc(Number(totalDepositedBigInt));
   const totalWithdrawAmount = formatUsdc(Number(withdrawAmount));
+  const totalPending = formatUsdc(Number(totalPendingBigInt));
 
   return {
     totalDeposited,
@@ -78,6 +86,7 @@ const useGetAdminData = () => {
     refetchAdminData,
     isSuccessAdminData,
     isErrorAdminData,
+    totalPending,
   };
 };
 

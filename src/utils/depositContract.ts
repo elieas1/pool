@@ -1,4 +1,4 @@
-export const depositAddress = "0x8F57efdb175aBd9D02A61Cc39BE8B30dA1e5640D";
+export const depositAddress = "0x9586e79640937b3784092d50F17075Dc305dCAF0";
 
 export const depositAbi = [
   {
@@ -305,6 +305,19 @@ export const depositAbi = [
   {
     inputs: [],
     name: "totalDeposited",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "totalPending",
     outputs: [
       {
         internalType: "uint256",

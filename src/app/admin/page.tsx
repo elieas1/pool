@@ -40,6 +40,7 @@ const Page = () => {
     successfullyDeposited,
     awaitingApproval,
     refetchAdminData,
+    totalPending,
   } = useGetAdminData();
 
   const {
@@ -166,6 +167,7 @@ const Page = () => {
               <div className="p-3">
                 Pending Requests: {awaitingApproval?.length}
               </div>
+              <div className="p-3">Pending Amount: {totalPending} USDC</div>
               <div className="p-3">Pending Requests (users):</div>
               {awaitingApproval?.map((addr) => (
                 <div key={addr}>{addr}</div>
