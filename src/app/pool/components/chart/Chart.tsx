@@ -9,7 +9,7 @@ export const options = {
     title: "APR (percent)",
     viewWindow: {
       min: 0,
-      max: 25, // Adjust this to provide some padding above the highest point
+      max: 100, // Adjust this to provide some padding above the highest point
     },
     titleTextStyle: {
       color: "#ffffff", // Change title text color to white

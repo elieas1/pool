@@ -24,12 +24,6 @@ export default function Home() {
   const formattedAdminBalance = Number(adminBalance!);
   const formattedTotalDeposit = formatUsdc(Number(totalDeposit!));
 
-  console.log({
-    formattedAdminBalance,
-    formattedTotalDeposit,
-    epoch: Number(epochTime!) / 86400,
-  });
-
   const apr =
     rewardHistory?.length! > 0
       ? ((formattedAdminBalance - formattedTotalDeposit) /

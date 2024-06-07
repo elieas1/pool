@@ -1,4 +1,4 @@
-export const depositAddress = "0x9586e79640937b3784092d50F17075Dc305dCAF0";
+export const depositAddress = "0xA3E3e15aaaE37b654a1ab1B30a35B1F97365ebf6";
 
 export const depositAbi = [
   {
@@ -279,6 +279,19 @@ export const depositAbi = [
   {
     inputs: [],
     name: "getWithdrawRequestsAmount",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "lastEpochTime",
     outputs: [
       {
         internalType: "uint256",

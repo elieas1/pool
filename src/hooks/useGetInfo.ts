@@ -20,7 +20,8 @@ const useGetInfo = () => {
               adminBalance: number;
             }[];
           },
-          { result: `0x${string}`[] }
+          { result: `0x${string}`[] },
+          { result: number }
         ]
       | undefined;
     refetch: () => void;
@@ -39,13 +40,20 @@ const useGetInfo = () => {
         address: depositAddress,
         functionName: "getWithdrawRequests",
       },
+      {
+        abi: depositAbi,
+        address: depositAddress,
+        functionName: "lastEpochTime",
+      },
     ],
   });
 
   const { result: totalDepositBigInt } = data?.[0] ?? {};
   const { result: rewardHistory } = data?.[1] ?? {};
   const { result: withdrawRequests } = data?.[2] ?? {};
+  const { result: lastEpochTimeBigInt } = data?.[3] ?? {};
   const totalDeposited = formatUsdc(Number(totalDepositBigInt)) || 0;
+  const lastEpochTime = Number(lastEpochTimeBigInt);
 
   return {
     totalDeposited,
@@ -54,6 +62,7 @@ const useGetInfo = () => {
     refetchInfo,
     isSuccessInfo,
     isLoadingInfo,
+    lastEpochTime,
   };
 };
 

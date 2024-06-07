@@ -13,6 +13,7 @@ import { formatUsdc } from "@/utils/functions";
 import useDepositActions from "@/hooks/useDepositActions";
 import useRewards from "@/hooks/useRewards";
 import useWithdrawDeposit from "@/hooks/useWithdrawDeposit";
+import CountdownTimer from "@/components/countdownTimer/CountdownTimer";
 
 const Page = () => {
   const { address } = useAccount();
@@ -22,6 +23,7 @@ const Page = () => {
     withdrawRequests,
     refetchInfo,
     isLoadingInfo,
+    lastEpochTime,
   } = useGetInfo();
 
   const { userBalance, refetchBalances, isLoadingBalances } = useGetUsdcBalance(
@@ -108,22 +110,26 @@ const Page = () => {
 
   const getApr = () => {
     if (isHistoryAvailable) {
-      const { epochTime, reward, totalDeposit, adminBalance } =
+      const { epochTime, totalDeposit, adminBalance } =
         rewardHistory[rewardHistory.length - 1];
+
       const formattedTotalDeposit = formatUsdc(Number(totalDeposit));
-      const formattedReward = formatUsdc(Number(reward));
-      const formattedAdminBalance = formatUsdc(Number(adminBalance));
+      const formattedAdminBalance = Number(adminBalance);
       const formattedEpochTime = Number(epochTime) / 86400;
+
       const apr =
         ((formattedAdminBalance - formattedTotalDeposit) /
           formattedTotalDeposit) *
         (365 / formattedEpochTime) *
         100;
+
       return apr;
     }
 
     return 0;
   };
+
+  console.log(lastEpochTime);
 
   const hasUserRequestedWithdraw = !!address
     ? withdrawRequests?.includes(address)
@@ -200,6 +206,7 @@ const Page = () => {
                 <div>APR</div>
                 <div>{getApr()} %</div>
               </div>
+              <CountdownTimer initialTimestamp={lastEpochTime} />
             </CardBody>
           </Card>
         </Skeleton>
