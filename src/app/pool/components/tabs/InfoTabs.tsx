@@ -76,32 +76,32 @@ const InfoTabs = ({
         {hasUserRequestedWithdraw && (
           <div className="flex justify-between items-center p-5">
             <div>Pending Withdraw</div>
-            <div className="flex gap-2 items-center">
-              <div>{withrawalRequestAmount} USDC</div>
+            <div className="flex gap-3 items-center">
               <Button
                 onClick={onCancelWithdraw}
                 isDisabled={withrawalRequestAmount === 0}
                 isLoading={isLoadingCancelWithdraw}
-                className="learnMore w-[70px] h-[57px]"
+                className="learnMore w-[100px] h-[57px]"
               >
                 Cancel Withdraw
               </Button>
+              <div>{withrawalRequestAmount} USDC</div>
             </div>
           </div>
         )}
         {withdrawApproved && (
-          <div className="flex justify-between p-5">
+          <div className="flex justify-between items-center p-5">
             <div>Withdrawable Amount</div>
-            <div className="flex gap-2 items-start">
-              <div>{withdrawableAmount} USDC</div>
+            <div className="flex gap-3 items-center">
               <Button
                 onClick={onWithdraw}
                 isDisabled={withdrawableAmount === 0}
                 isLoading={isLoadingWithdraw}
-                className="learnMore w-[70px] h-[57px]"
+                className="learnMore w-[100px] h-[57px]"
               >
                 Withdraw
               </Button>
+              <div>{withdrawableAmount} USDC</div>
             </div>
           </div>
         )}
@@ -143,19 +143,19 @@ const InfoTabs = ({
                 <EmptySpace spaceTop={5} />
                 <div className="flex gap-1 items-center">
                   <PercentButton
-                    onClick={() => setAmount(userBalance * 0.25)}
+                    onClick={() => setAmount(Math.floor(userBalance * 0.25))}
                     percent={25}
                   />
                   <PercentButton
-                    onClick={() => setAmount(userBalance * 0.5)}
+                    onClick={() => setAmount(Math.floor(userBalance * 0.5))}
                     percent={50}
                   />
                   <PercentButton
-                    onClick={() => setAmount(userBalance * 0.75)}
+                    onClick={() => setAmount(Math.floor(userBalance * 0.75))}
                     percent={75}
                   />
                   <PercentButton
-                    onClick={() => setAmount(userBalance)}
+                    onClick={() => setAmount(Math.floor(userBalance))}
                     percent={100}
                   />
                 </div>
@@ -196,7 +196,9 @@ const InfoTabs = ({
                     <PercentButton
                       onClick={() =>
                         setWithdrawAmount(
-                          (totalAmount - withrawalRequestAmount) * 0.25
+                          Math.floor(
+                            (totalAmount - withrawalRequestAmount) * 0.25
+                          )
                         )
                       }
                       percent={25}
@@ -204,7 +206,9 @@ const InfoTabs = ({
                     <PercentButton
                       onClick={() =>
                         setWithdrawAmount(
-                          (totalAmount - withrawalRequestAmount) * 0.5
+                          Math.floor(
+                            (totalAmount - withrawalRequestAmount) * 0.5
+                          )
                         )
                       }
                       percent={50}
@@ -212,14 +216,18 @@ const InfoTabs = ({
                     <PercentButton
                       onClick={() =>
                         setWithdrawAmount(
-                          (totalAmount - withrawalRequestAmount) * 0.75
+                          Math.floor(
+                            (totalAmount - withrawalRequestAmount) * 0.75
+                          )
                         )
                       }
                       percent={75}
                     />
                     <PercentButton
                       onClick={() =>
-                        setWithdrawAmount(totalAmount - withrawalRequestAmount)
+                        setWithdrawAmount(
+                          Math.floor(totalAmount - withrawalRequestAmount)
+                        )
                       }
                       percent={100}
                     />

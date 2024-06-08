@@ -206,6 +206,10 @@ const Page = () => {
                 <div>APR</div>
                 <div>{getApr()} %</div>
               </div>
+              <div className="flex justify-between p-5">
+                <div>Current Epoch</div>
+                <div>{rewardHistory?.length! + 1}</div>
+              </div>
               <CountdownTimer initialTimestamp={lastEpochTime} />
             </CardBody>
           </Card>

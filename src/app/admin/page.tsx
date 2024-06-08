@@ -7,6 +7,7 @@ import useGetAdminData from "@/hooks/useGetAdminData";
 import useGetUsdcBalance from "@/hooks/useGetUsdcBalance";
 import useGetUserDeposit from "@/hooks/useGetUserDeposit";
 import useAdminActions from "@/hooks/useAdminActions";
+import useGetInfo from "@/hooks/useGetInfo";
 
 const Page = () => {
   const [searchValue, setSearchValue] = useState("");
@@ -16,6 +17,8 @@ const Page = () => {
   const { address } = useAccount();
 
   const { contractBalance, userBalance } = useGetUsdcBalance({ address });
+
+  const { rewardHistory } = useGetInfo();
 
   const {
     amount,
@@ -165,7 +168,10 @@ const Page = () => {
           <Card isBlurred>
             <CardBody className="flex flex-col justify-between">
               <div className="p-3">
-                Pending Requests: {awaitingApproval?.length}
+                Current Epoch {rewardHistory?.length! + 1}
+              </div>
+              <div className="p-3">
+                Pending Requests {awaitingApproval?.length}
               </div>
               <div className="p-3">Pending Amount: {totalPending} USDC</div>
               <div className="p-3">Pending Requests (users):</div>
