@@ -18,7 +18,7 @@ const Page = () => {
 
   const { contractBalance, userBalance } = useGetUsdcBalance({ address });
 
-  const { rewardHistory } = useGetInfo();
+  const { currentEpoch } = useGetInfo();
 
   const {
     amount,
@@ -167,9 +167,7 @@ const Page = () => {
         <Skeleton style={{ borderRadius: "25px" }} isLoaded={isAdmin}>
           <Card isBlurred>
             <CardBody className="flex flex-col justify-between">
-              <div className="p-3">
-                Current Epoch {rewardHistory?.length! + 1}
-              </div>
+              <div className="p-3">Current Epoch {currentEpoch}</div>
               <div className="p-3">
                 Pending Requests {awaitingApproval?.length}
               </div>

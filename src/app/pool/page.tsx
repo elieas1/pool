@@ -24,6 +24,7 @@ const Page = () => {
     refetchInfo,
     isLoadingInfo,
     lastEpochTime,
+    currentEpoch,
   } = useGetInfo();
 
   const { userBalance, refetchBalances, isLoadingBalances } = useGetUsdcBalance(
@@ -208,9 +209,11 @@ const Page = () => {
               </div>
               <div className="flex justify-between p-5">
                 <div>Current Epoch</div>
-                <div>{rewardHistory?.length! + 1}</div>
+                <div>{currentEpoch === 0 ? "Pending" : currentEpoch}</div>
               </div>
-              <CountdownTimer initialTimestamp={lastEpochTime} />
+              {currentEpoch > 0 && (
+                <CountdownTimer initialTimestamp={lastEpochTime} />
+              )}
             </CardBody>
           </Card>
         </Skeleton>

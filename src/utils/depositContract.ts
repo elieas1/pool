@@ -1,4 +1,4 @@
-export const depositAddress = "0xA3E3e15aaaE37b654a1ab1B30a35B1F97365ebf6";
+export const depositAddress = "0x718dE5477f17eD8923fAd0DB96273eD5A2245e13";
 
 export const depositAbi = [
   {
@@ -131,6 +131,19 @@ export const depositAbi = [
         internalType: "address",
         name: "",
         type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "currentEpoch",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
       },
     ],
     stateMutability: "view",
