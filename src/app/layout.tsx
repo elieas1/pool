@@ -36,7 +36,12 @@ export default function RootLayout({
             <Web3ModalProvider initialState={initialState}>
               <div className="flex flex-1 w-full justify-center sm:justify-between items-center flex-wrap">
                 <Button className="hidden sm:block learnMore">
-                  Learn More
+                  <Link
+                    href="https://numerical.gitbook.io/numericalfi"
+                    target="_blank"
+                  >
+                    Learn More
+                  </Link>
                 </Button>
                 <Link href="/">
                   <Image src="/logo.png" width={200} height={200} alt="logo" />
