@@ -20,6 +20,7 @@ export const options = {
     gridlines: {
       count: 3, // Ensure there are enough gridlines for padding
     },
+    ticks: [50, 100],
   },
   hAxis: {
     title: "Epoch",
