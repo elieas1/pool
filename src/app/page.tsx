@@ -35,7 +35,7 @@ export default function Home() {
       title="Numerical Stable Engine V1"
       imageSource="/vault.png"
       totalDeposited={totalDeposited}
-      apr={apr}
+      apr={apr.toFixed(2)}
       onPress={navigateToPool}
       userDeposit={depositedAmount + pendingAmount}
     />

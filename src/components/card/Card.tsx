@@ -6,7 +6,7 @@ interface Props {
   imageSource: string;
   userDeposit: number;
   totalDeposited: number;
-  apr: number;
+  apr: string;
   title: string;
   onPress: () => void;
 }

@@ -131,7 +131,6 @@ const InfoTabs = ({
             <div style={{ color: "white" }} className="flex gap-2">
               <div className="w-full">
                 <Input
-                  isRequired
                   type="number"
                   label="Amount"
                   defaultValue="0"
@@ -181,7 +180,6 @@ const InfoTabs = ({
               <div className="flex gap-2">
                 <div className="w-full">
                   <Input
-                    isRequired
                     type="number"
                     label="Amount"
                     defaultValue="0"
@@ -248,7 +246,7 @@ const InfoTabs = ({
             <div style={{ color: "white" }}>
               <div className="flex justify-between p-5">
                 <div>Claimed Rewards</div>
-                <div>{claimedRewards} USDC</div>
+                <div>{claimedRewards.toFixed(2)} USDC</div>
               </div>
               <div className="flex justify-between p-5">
                 <div>

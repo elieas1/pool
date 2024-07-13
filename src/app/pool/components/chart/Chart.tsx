@@ -1,3 +1,4 @@
+import { formatUsdc } from "@/utils/functions";
 import { Card, CardBody } from "@nextui-org/react";
 import React from "react";
 import Chart from "react-google-charts";
@@ -54,13 +55,31 @@ export const options = {
 const LineChart = ({
   array,
 }: {
-  array: { totalDeposit: number; reward: number }[] | undefined;
+  array:
+    | {
+        totalDeposit: number;
+        reward: number;
+        adminBalance: number;
+        epochTime: number;
+      }[]
+    | undefined;
 }) => {
   const data: (string | number)[][] = [["Epoch", "APR"]];
 
   array?.map((item, index) => {
-    const { totalDeposit, reward } = item ?? {};
-    data.push([index, Number(reward)]);
+    const { totalDeposit, adminBalance, epochTime } = item ?? {};
+
+    const formattedTotalDeposit = formatUsdc(Number(totalDeposit));
+    const formattedAdminBalance = Number(adminBalance);
+    const formattedEpochTime = Number(epochTime) / 86400;
+
+    const apr =
+      ((formattedAdminBalance - formattedTotalDeposit) /
+        formattedTotalDeposit) *
+      (365 / formattedEpochTime) *
+      100;
+
+    data.push([index + 1, apr]);
   });
 
   if (!array || array?.length === 0) {

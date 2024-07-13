@@ -124,13 +124,11 @@ const Page = () => {
         (365 / formattedEpochTime) *
         100;
 
-      return apr;
+      return apr.toFixed(2);
     }
 
     return 0;
   };
-
-  console.log(lastEpochTime);
 
   const hasUserRequestedWithdraw = !!address
     ? withdrawRequests?.includes(address)
@@ -150,7 +148,7 @@ const Page = () => {
                 className="flex justify-between p-5"
               >
                 <div>My USDC balance</div>
-                <div>{userBalance} USDC</div>
+                <div>{userBalance.toFixed(2)} USDC</div>
               </div>
             </CardBody>
           </Card>
