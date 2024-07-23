@@ -34,7 +34,7 @@ export default function Home() {
     <CardItem
       title="Numerical Stable Engine V1"
       imageSource="/vault.png"
-      totalDeposited={totalDeposited}
+      totalDeposited={totalDeposited.toFixed(0)}
       apr={apr.toFixed(2)}
       onPress={navigateToPool}
       userDeposit={depositedAmount + pendingAmount}

@@ -199,7 +199,7 @@ const Page = () => {
             <CardBody style={{ color: "white" }}>
               <div className="flex justify-between p-5">
                 <div>TVL</div>
-                <div>{totalDeposited} USDC</div>
+                <div>{totalDeposited.toFixed(0)} USDC</div>
               </div>
               <div className="flex justify-between p-5">
                 <div>APR</div>

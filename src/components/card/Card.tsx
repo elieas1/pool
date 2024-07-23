@@ -5,7 +5,7 @@ import classes from "./Card.module.css";
 interface Props {
   imageSource: string;
   userDeposit: number;
-  totalDeposited: number;
+  totalDeposited: string;
   apr: string;
   title: string;
   onPress: () => void;
