@@ -1,4 +1,4 @@
-export const depositAddress = "0xe04BC5e55b0F7FaDbc0005A6d9725717F621420B";
+export const depositAddress = "0xCEDC900f71B307b2C4413399542097f77A329E0F";
 
 export const depositAbi = [
   {
@@ -61,6 +61,24 @@ export const depositAbi = [
         type: "uint256",
       },
     ],
+    name: "distributeLosses",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "amount",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "adminBalance",
+        type: "uint256",
+      },
+    ],
     name: "distributeRewards",
     outputs: [],
     stateMutability: "nonpayable",
@@ -94,8 +112,41 @@ export const depositAbi = [
     type: "function",
   },
   {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "newValue",
+        type: "uint256",
+      },
+    ],
+    name: "setMaxPool",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "bool",
+        name: "value",
+        type: "bool",
+      },
+    ],
+    name: "setPaused",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
     inputs: [],
     name: "startNewCycle",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "switchRedepositStatus",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -110,6 +161,11 @@ export const depositAbi = [
       {
         internalType: "address",
         name: "_adminWallet",
+        type: "address",
+      },
+      {
+        internalType: "address",
+        name: "_oldContract",
         type: "address",
       },
     ],
@@ -189,7 +245,7 @@ export const depositAbi = [
             type: "uint256",
           },
         ],
-        internalType: "struct poolInvestment.rewardHistory[]",
+        internalType: "struct upgradedNumericalVault1.rewardHistory[]",
         name: "",
         type: "tuple[]",
       },
@@ -268,9 +324,41 @@ export const depositAbi = [
             type: "uint256",
           },
         ],
-        internalType: "struct poolInvestment.depositor",
+        internalType: "struct upgradedNumericalVault1.depositor",
         name: "",
         type: "tuple",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "getUserHistory",
+    outputs: [
+      {
+        internalType: "address[]",
+        name: "",
+        type: "address[]",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "addr",
+        type: "address",
+      },
+    ],
+    name: "getUserRedepositStatus",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
       },
     ],
     stateMutability: "view",
@@ -304,7 +392,33 @@ export const depositAbi = [
   },
   {
     inputs: [],
+    name: "isPaused",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
     name: "lastEpochTime",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "maxPool",
     outputs: [
       {
         internalType: "uint256",

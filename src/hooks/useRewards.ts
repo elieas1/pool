@@ -16,7 +16,10 @@ const useRewards = () => {
     isPending: isLoadingReDeposit,
     isSuccess: isSuccessReDeposit,
     isError: isErrorRedeposit,
+    error,
   } = useWriteContract();
+
+  console.log(error);
 
   useEffect(() => {
     if (isErrorClaimRewards) {
