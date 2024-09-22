@@ -1,6 +1,7 @@
 import React from "react";
 import { Card, CardBody, Image } from "@nextui-org/react";
 import classes from "./Card.module.css";
+import { maxUsdc } from "@/utils/constant";
 
 interface Props {
   imageSource: string;
@@ -58,7 +59,9 @@ const CardItem = ({
             <div className="flex gap-5">
               <div>
                 <div className={classes.property}>TVL</div>
-                <div className={classes.value}>{totalDeposited} USDC</div>
+                <div className={classes.value}>
+                  {totalDeposited}/{maxUsdc} USDC
+                </div>
               </div>
               <div>
                 <div className={classes.property}>My Deposit</div>

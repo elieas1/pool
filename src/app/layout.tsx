@@ -52,7 +52,8 @@ export default function RootLayout({
                 </div>
               </div>
               <EmptySpace spaceTop={50} />
-              {children}
+              {/* {children} */}
+              <div style={{ fontSize: 30 }}>Under maintenance</div>
             </Web3ModalProvider>
           </main>
         </Providers>

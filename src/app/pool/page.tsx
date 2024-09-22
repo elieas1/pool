@@ -14,6 +14,7 @@ import useDepositActions from "@/hooks/useDepositActions";
 import useRewards from "@/hooks/useRewards";
 import useWithdrawDeposit from "@/hooks/useWithdrawDeposit";
 import CountdownTimer from "@/components/countdownTimer/CountdownTimer";
+import { maxUsdc } from "@/utils/constant";
 
 const Page = () => {
   const { address } = useAccount();
@@ -199,7 +200,9 @@ const Page = () => {
             <CardBody style={{ color: "white" }}>
               <div className="flex justify-between p-5">
                 <div>TVL</div>
-                <div>{totalDeposited.toFixed(0)} USDC</div>
+                <div>
+                  {totalDeposited.toFixed(0)}/ {maxUsdc} USDC
+                </div>
               </div>
               <div className="flex justify-between p-5">
                 <div>APR</div>
