@@ -1,4 +1,5 @@
 import { depositAbi, depositAddress } from "@/utils/depositContract";
+import { handleError } from "@/utils/functions";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
 import { useWriteContract } from "wagmi";
@@ -9,6 +10,7 @@ const useRewards = () => {
     isPending: isLoadingClaimRewards,
     isSuccess: isSuccessClaimRewards,
     isError: isErrorClaimRewards,
+    error: claimRewardsError,
   } = useWriteContract();
 
   const {
@@ -16,20 +18,20 @@ const useRewards = () => {
     isPending: isLoadingReDeposit,
     isSuccess: isSuccessReDeposit,
     isError: isErrorRedeposit,
-    error,
+    error: redepositError,
   } = useWriteContract();
 
-  console.log(error);
+  useEffect(() => {
+    if (isErrorRedeposit) {
+      handleError(redepositError.message);
+    }
+  }, [isErrorRedeposit, redepositError]);
 
   useEffect(() => {
     if (isErrorClaimRewards) {
-      toast.error("Claim failed");
+      handleError(claimRewardsError.message);
     }
-
-    if (isErrorRedeposit) {
-      toast.error("Deposit failed");
-    }
-  }, [isErrorClaimRewards, isErrorRedeposit]);
+  }, [isErrorClaimRewards, claimRewardsError]);
 
   const claimRewards = () => {
     claimRewardsFn({

@@ -26,6 +26,7 @@ const Page = () => {
     isLoadingInfo,
     lastEpochTime,
     currentEpoch,
+    totalPending,
   } = useGetInfo();
 
   const { userBalance, refetchBalances, isLoadingBalances } = useGetUsdcBalance(
@@ -188,6 +189,8 @@ const Page = () => {
             userBalance={userBalance}
             withrawalRequestAmount={withrawalRequestAmount}
             depositAmount={depositAmount}
+            totalPending={totalPending}
+            totalDeposit={totalDeposited}
           />
         </Skeleton>
       </div>
@@ -201,7 +204,7 @@ const Page = () => {
               <div className="flex justify-between p-5">
                 <div>TVL</div>
                 <div>
-                  {totalDeposited.toFixed(0)}/ {maxUsdc} USDC
+                  {(totalDeposited + totalPending).toFixed(0)}/ {maxUsdc} USDC
                 </div>
               </div>
               <div className="flex justify-between p-5">

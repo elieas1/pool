@@ -42,7 +42,7 @@ const LineChart = ({
         max: (array?.length ?? 0) + 2, // Adjust this to provide some padding above the highest point
       },
       gridlines: {
-        count: 4, // Ensure there are enough gridlines for padding
+        count: array?.length, // Ensure there are enough gridlines for padding
       },
       titleTextStyle: {
         color: "#ffffff", // Change title text color to white

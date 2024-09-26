@@ -1,5 +1,5 @@
 import { depositAbi, depositAddress } from "@/utils/depositContract";
-import { parseUsdc } from "@/utils/functions";
+import { handleError, parseUsdc } from "@/utils/functions";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
 import { useWriteContract } from "wagmi";
@@ -20,54 +20,63 @@ const useAdminActions = ({
     isPending: isLoadingNewCycle,
     isSuccess: isSuccessNewCycle,
     isError: isErrorNewCycle,
+    error: newCycleError,
   } = useWriteContract();
 
-  const {
-    writeContract: approveWithdrawFn,
-    isPending: isLoadingApproveWithdraw,
-    isSuccess: isSuccessApproveWithdraw,
-    isError: isErrorApproveWithdraw,
-  } = useWriteContract();
-
-  const {
-    writeContract: distributeRewardsFn,
-    isPending: isLoadingDistributeRewards,
-    isSuccess: isSuccessDistributeRewards,
-    isError: isErrorDistributeRewards,
-  } = useWriteContract();
+  useEffect(() => {
+    if (isErrorNewCycle) {
+      handleError(newCycleError.message);
+    }
+  }, [isErrorNewCycle, newCycleError]);
 
   useEffect(() => {
     if (isSuccessNewCycle) {
       toast.success("New epoch started successfully");
       refetchAdminData();
     }
+  }, [isSuccessNewCycle, refetchAdminData]);
 
-    if (isErrorNewCycle) {
-      toast.error("Error starting new epoch");
+  const {
+    writeContract: approveWithdrawFn,
+    isPending: isLoadingApproveWithdraw,
+    isSuccess: isSuccessApproveWithdraw,
+    isError: isErrorApproveWithdraw,
+    error: ApproveWithdrawError,
+  } = useWriteContract();
+
+  useEffect(() => {
+    if (isErrorApproveWithdraw) {
+      handleError(ApproveWithdrawError.message);
     }
-  }, [isErrorNewCycle, isSuccessNewCycle, refetchAdminData]);
+  }, [isErrorApproveWithdraw, ApproveWithdrawError]);
 
   useEffect(() => {
     if (isSuccessApproveWithdraw) {
       toast.success("Withdraw requests approved successfully");
       refetchAdminData();
     }
+  }, [isSuccessApproveWithdraw, refetchAdminData]);
 
-    if (isErrorApproveWithdraw) {
-      toast.error("Error approving requests");
+  const {
+    writeContract: distributeRewardsFn,
+    isPending: isLoadingDistributeRewards,
+    isSuccess: isSuccessDistributeRewards,
+    isError: isErrorDistributeRewards,
+    error: distributeRewardsError,
+  } = useWriteContract();
+
+  useEffect(() => {
+    if (isErrorDistributeRewards) {
+      handleError(distributeRewardsError.message);
     }
-  }, [isErrorApproveWithdraw, isSuccessApproveWithdraw, refetchAdminData]);
+  }, [isErrorDistributeRewards, distributeRewardsError]);
 
   useEffect(() => {
     if (isSuccessDistributeRewards) {
       toast.success("Rewards distributed successfully");
       refetchAdminData();
     }
-
-    if (isErrorDistributeRewards) {
-      toast.error("Error distributing rewards");
-    }
-  }, [isErrorDistributeRewards, isSuccessDistributeRewards, refetchAdminData]);
+  }, [isSuccessDistributeRewards, refetchAdminData]);
 
   const startNewCycle = () => {
     startNewCycleFn({

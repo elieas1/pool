@@ -1,5 +1,5 @@
 import { depositAbi, depositAddress } from "@/utils/depositContract";
-import { formatUsdc, parseUsdc } from "@/utils/functions";
+import { formatUsdc, handleError, parseUsdc } from "@/utils/functions";
 import { usdcAbi, usdcAddress } from "@/utils/usdcContract";
 import { useCallback, useEffect } from "react";
 import { toast } from "react-toastify";
@@ -31,17 +31,20 @@ const useDepositActions = ({
     isSuccess: isSuccessDeposit,
     isPending: isLoadingDeposit,
     isError: isErrorDeposit,
+    error: depositError,
   } = useWriteContract();
 
   useEffect(() => {
     if (isErrorDeposit) {
-      toast.error("Deposit Failed");
+      handleError(depositError.message);
     }
+  }, [depositError, isErrorDeposit]);
 
+  useEffect(() => {
     if (isErrorApprove) {
-      toast.error("Deposit failed");
+      toast.error("Approve failed");
     }
-  }, [isErrorApprove, isErrorDeposit]);
+  }, [isErrorApprove]);
 
   useEffect(() => {
     if (isSuccessApprove) {

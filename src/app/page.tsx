@@ -6,7 +6,7 @@ import { formatUsdc } from "@/utils/functions";
 import { useRouter } from "next/navigation";
 
 export default function Home() {
-  const { totalDeposited, rewardHistory } = useGetInfo();
+  const { totalDeposited, rewardHistory, totalPending } = useGetInfo();
   const { pendingAmount, depositedAmount } = useGetUserInfo();
 
   const { push } = useRouter();
@@ -34,7 +34,7 @@ export default function Home() {
     <CardItem
       title="Numerical Stable Engine V1"
       imageSource="/vault.png"
-      totalDeposited={totalDeposited.toFixed(0)}
+      totalDeposited={(totalDeposited + totalPending).toFixed(0)}
       apr={apr.toFixed(2)}
       onPress={navigateToPool}
       userDeposit={depositedAmount + pendingAmount}

@@ -1,7 +1,6 @@
 import { depositAbi, depositAddress } from "@/utils/depositContract";
-import { parseUsdc } from "@/utils/functions";
+import { handleError, parseUsdc } from "@/utils/functions";
 import { useEffect } from "react";
-import { toast } from "react-toastify";
 import { useWriteContract } from "wagmi";
 
 const useWithdrawDeposit = () => {
@@ -10,6 +9,7 @@ const useWithdrawDeposit = () => {
     isPending: isLoadingWithdrawRequest,
     isError: isErrorWithdrawRequest,
     isSuccess: isSuccessWithdrawRequest,
+    error: withdrawRequestError,
   } = useWriteContract();
 
   const {
@@ -17,6 +17,7 @@ const useWithdrawDeposit = () => {
     isPending: isLoadingCancelWithdraw,
     isError: isErrorCancelWithdraw,
     isSuccess: isSuccessCancelWithdraw,
+    error: cancelWithdrawError,
   } = useWriteContract();
 
   const {
@@ -24,21 +25,26 @@ const useWithdrawDeposit = () => {
     isPending: isLoadingWithdraw,
     isError: isErrorWithdraw,
     isSuccess: isSuccessWithdraw,
+    error: withdrawError,
   } = useWriteContract();
 
   useEffect(() => {
-    if (isErrorWithdrawRequest) {
-      toast.error("Request failed");
-    }
-
-    if (isErrorCancelWithdraw) {
-      toast.error("Cancel request failed");
-    }
-
     if (isErrorWithdraw) {
-      toast.error("Withdraw failed");
+      handleError(withdrawError?.message);
     }
-  }, [isErrorCancelWithdraw, isErrorWithdraw, isErrorWithdrawRequest]);
+  }, [isErrorWithdraw, withdrawError]);
+
+  useEffect(() => {
+    if (isErrorCancelWithdraw) {
+      handleError(cancelWithdrawError?.message);
+    }
+  }, [cancelWithdrawError, isErrorCancelWithdraw]);
+
+  useEffect(() => {
+    if (isErrorWithdrawRequest) {
+      handleError(withdrawRequestError?.message);
+    }
+  }, [isErrorWithdrawRequest, withdrawRequestError]);
 
   const requestWithdraw = (amount: number) => {
     requestWithdrawFn({

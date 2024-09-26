@@ -22,6 +22,7 @@ const useGetInfo = () => {
           },
           { result: `0x${string}`[] },
           { result: number },
+          { result: number },
           { result: number }
         ]
       | undefined;
@@ -51,6 +52,11 @@ const useGetInfo = () => {
         address: depositAddress,
         functionName: "currentEpoch",
       },
+      {
+        abi: depositAbi,
+        address: depositAddress,
+        functionName: "totalPending",
+      },
     ],
   });
 
@@ -59,9 +65,11 @@ const useGetInfo = () => {
   const { result: withdrawRequests } = data?.[2] ?? {};
   const { result: lastEpochTimeBigInt } = data?.[3] ?? {};
   const { result: currentEpochBigInt } = data?.[4] ?? {};
+  const { result: totalPendingBigInt } = data?.[5] ?? {};
   const totalDeposited = formatUsdc(Number(totalDepositBigInt)) || 0;
   const lastEpochTime = Number(lastEpochTimeBigInt);
   const currentEpoch = Number(currentEpochBigInt);
+  const totalPending = formatUsdc(Number(totalPendingBigInt)) || 0;
 
   return {
     totalDeposited,
@@ -72,6 +80,7 @@ const useGetInfo = () => {
     isLoadingInfo,
     lastEpochTime,
     currentEpoch,
+    totalPending,
   };
 };
 

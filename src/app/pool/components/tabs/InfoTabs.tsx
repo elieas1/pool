@@ -28,6 +28,8 @@ type Props = {
   isSuccessApprove: boolean;
   withrawalRequestAmount: number;
   depositAmount: (amount: number) => void;
+  totalPending: number;
+  totalDeposit: number;
 };
 
 const InfoTabs = ({
@@ -54,6 +56,8 @@ const InfoTabs = ({
   userBalance,
   withrawalRequestAmount,
   depositAmount,
+  totalPending,
+  totalDeposit,
 }: Props) => {
   const [amount, setAmount] = useState(0);
   const [withdrawAmount, setWithdrawAmount] = useState(0);
@@ -123,8 +127,16 @@ const InfoTabs = ({
     onRequestWithdraw(withdrawAmount);
   };
 
+  const maxDeposit = 100000 - (totalPending + totalDeposit);
+  const maxAllowedDeposit = Math.min(maxDeposit, userBalance);
+
   return (
-    <Card style={{ backgroundColor: "#2E334B" }} isBlurred>
+    <Card
+      style={{
+        backgroundColor: "#2E334B",
+      }}
+      isBlurred
+    >
       <CardBody>
         <Tabs fullWidth className="w-full">
           <Tab key="deposit" title="Deposit">
@@ -140,21 +152,27 @@ const InfoTabs = ({
                   onChange={handleChangeAmount}
                 />
                 <EmptySpace spaceTop={5} />
-                <div className="flex gap-1 items-center">
+                <div className="gap-1 items-center">
                   <PercentButton
-                    onClick={() => setAmount(Math.floor(userBalance * 0.25))}
+                    onClick={() =>
+                      setAmount(Math.floor(maxAllowedDeposit * 0.25))
+                    }
                     percent={25}
                   />
                   <PercentButton
-                    onClick={() => setAmount(Math.floor(userBalance * 0.5))}
+                    onClick={() =>
+                      setAmount(Math.floor(maxAllowedDeposit * 0.5))
+                    }
                     percent={50}
                   />
                   <PercentButton
-                    onClick={() => setAmount(Math.floor(userBalance * 0.75))}
+                    onClick={() =>
+                      setAmount(Math.floor(maxAllowedDeposit * 0.75))
+                    }
                     percent={75}
                   />
                   <PercentButton
-                    onClick={() => setAmount(Math.floor(userBalance))}
+                    onClick={() => setAmount(Math.floor(maxAllowedDeposit))}
                     percent={100}
                   />
                 </div>
@@ -190,7 +208,7 @@ const InfoTabs = ({
                     onChange={handleChangeWithdrawAmount}
                   />
                   <EmptySpace spaceTop={5} />
-                  <div className="flex gap-1 items-center">
+                  <div className="gap-1 items-center">
                     <PercentButton
                       onClick={() =>
                         setWithdrawAmount(
@@ -276,7 +294,7 @@ const InfoTabs = ({
                     </Button>
                   </div>
                 </div>
-                <div>{claimableRewards} USDC</div>
+                <div>{claimableRewards.toFixed(2)} USDC</div>
               </div>
             </div>
           </Tab>

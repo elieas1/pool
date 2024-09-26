@@ -9,3 +9,9 @@
   align-items: center;
   margin: auto;
 }
+
+@media screen and (max-width: 800px) {
+  .tooltip {
+    display: none;
+  }
+}
