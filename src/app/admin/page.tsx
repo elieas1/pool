@@ -53,6 +53,9 @@ const Page = () => {
     isLoadingDistributeRewards,
     startNewCycle,
     isLoadingNewCycle,
+    isLoadingNewCycleHash,
+    isLoadingApproveWithdrawHash,
+    isLoadingDistributeRewardsHash,
   } = useAdminActions({ refetchAdminData, rewardValue, adminWalletValue });
 
   const isAdmin = address === ownerAddress;
@@ -130,7 +133,9 @@ const Page = () => {
                   className="text-wrap h-[%]"
                   onClick={handleDistributeRewards}
                   isDisabled={rewardValue === 0}
-                  isLoading={isLoadingDistributeRewards}
+                  isLoading={
+                    isLoadingDistributeRewards || isLoadingDistributeRewardsHash
+                  }
                   variant="shadow"
                   color="warning"
                 >
@@ -155,7 +160,9 @@ const Page = () => {
               ))}
               <Button
                 onClick={handleApproveWithdraw}
-                isLoading={isLoadingApproveWithdraw}
+                isLoading={
+                  isLoadingApproveWithdraw || isLoadingApproveWithdrawHash
+                }
                 variant="shadow"
                 color="warning"
               >
@@ -177,7 +184,7 @@ const Page = () => {
                 <div key={addr}>{addr}</div>
               ))}
               <Button
-                isLoading={isLoadingNewCycle}
+                isLoading={isLoadingNewCycle || isLoadingNewCycleHash}
                 onClick={handleStartNewCycle}
                 variant="shadow"
                 color="warning"

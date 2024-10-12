@@ -1,25 +1,34 @@
 import { depositAbi, depositAddress } from "@/utils/depositContract";
 import { handleError } from "@/utils/functions";
 import { useEffect } from "react";
-import { toast } from "react-toastify";
-import { useWriteContract } from "wagmi";
+import { useWaitForTransactionReceipt, useWriteContract } from "wagmi";
 
 const useRewards = () => {
   const {
     writeContract: claimRewardsFn,
-    isPending: isLoadingClaimRewards,
-    isSuccess: isSuccessClaimRewards,
+    isPending: isLoadingClaimRewardsHash,
     isError: isErrorClaimRewards,
     error: claimRewardsError,
+    data: claimRewardsHashData,
   } = useWriteContract();
+
+  const { isLoading: isLoadingClaimRewards, isSuccess: isSuccessClaimRewards } =
+    useWaitForTransactionReceipt({
+      hash: claimRewardsHashData,
+    });
 
   const {
     writeContract: reDepositFn,
-    isPending: isLoadingReDeposit,
-    isSuccess: isSuccessReDeposit,
+    isPending: isLoadingRedepositHash,
     isError: isErrorRedeposit,
     error: redepositError,
+    data: redepositHashData,
   } = useWriteContract();
+
+  const { isLoading: isLoadingRedeposit, isSuccess: isSuccessRedeposit } =
+    useWaitForTransactionReceipt({
+      hash: redepositHashData,
+    });
 
   useEffect(() => {
     if (isErrorRedeposit) {
@@ -51,11 +60,13 @@ const useRewards = () => {
 
   return {
     claimRewards,
+    isLoadingClaimRewardsHash,
     isLoadingClaimRewards,
     isSuccessClaimRewards,
     reDeposit,
-    isLoadingReDeposit,
-    isSuccessReDeposit,
+    isLoadingRedeposit,
+    isLoadingRedepositHash,
+    isSuccessRedeposit,
   };
 };
 

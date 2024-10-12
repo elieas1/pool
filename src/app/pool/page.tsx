@@ -40,17 +40,21 @@ const Page = () => {
     isLoadingDeposit,
     isSuccessDeposit,
     isLoadingApprove,
+    isLoadingApproveHash,
     isSuccessApprove,
     depositAmount,
+    isLoadingDepositHash,
   } = useDepositActions({ address });
 
   const {
     claimRewards,
-    isLoadingClaimRewards,
+    isLoadingClaimRewardsHash,
     isSuccessClaimRewards,
     reDeposit,
-    isLoadingReDeposit,
-    isSuccessReDeposit,
+    isLoadingRedeposit,
+    isLoadingRedepositHash,
+    isSuccessRedeposit,
+    isLoadingClaimRewards,
   } = useRewards();
 
   const {
@@ -97,14 +101,14 @@ const Page = () => {
   ]);
 
   useEffect(() => {
-    if (isSuccessDeposit || isSuccessClaimRewards || isSuccessReDeposit) {
+    if (isSuccessDeposit || isSuccessClaimRewards || isSuccessRedeposit) {
       refetchBalances();
       refetchUserData();
     }
   }, [
     isSuccessClaimRewards,
     isSuccessDeposit,
-    isSuccessReDeposit,
+    isSuccessRedeposit,
     refetchBalances,
     refetchUserData,
   ]);
@@ -175,11 +179,16 @@ const Page = () => {
             pendingAmount={pendingAmount}
             isSuccessApprove={isSuccessApprove}
             onDeposit={deposit}
-            isLoadingDeposit={isLoadingDeposit || isLoadingApprove}
+            isLoadingDeposit={
+              isLoadingDeposit ||
+              isLoadingApprove ||
+              isLoadingDepositHash ||
+              isLoadingApproveHash
+            }
             onClaim={claimRewards}
-            isLoadingClaim={isLoadingClaimRewards}
+            isLoadingClaim={isLoadingClaimRewardsHash || isLoadingClaimRewards}
             onReDeposit={reDeposit}
-            isLoadingReDeposit={isLoadingReDeposit}
+            isLoadingReDeposit={isLoadingRedepositHash || isLoadingRedeposit}
             onRequestWithdraw={requestWithdraw}
             isLoadingRequestWithdraw={isLoadingWithdrawRequest}
             onCancelWithdraw={cancelWithdraw}

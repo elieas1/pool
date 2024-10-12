@@ -3,7 +3,11 @@ import { formatUsdc, handleError, parseUsdc } from "@/utils/functions";
 import { usdcAbi, usdcAddress } from "@/utils/usdcContract";
 import { useCallback, useEffect } from "react";
 import { toast } from "react-toastify";
-import { useReadContract, useWriteContract } from "wagmi";
+import {
+  useReadContract,
+  useWaitForTransactionReceipt,
+  useWriteContract,
+} from "wagmi";
 
 const useDepositActions = ({
   address,
@@ -22,17 +26,27 @@ const useDepositActions = ({
   const {
     writeContract: approveUsdc,
     isSuccess: isSuccessApprove,
-    isPending: isLoadingApprove,
+    isPending: isLoadingApproveHash,
     isError: isErrorApprove,
+    data: approveHash,
   } = useWriteContract();
+
+  const { isLoading: isLoadingApprove } = useWaitForTransactionReceipt({
+    hash: approveHash,
+  });
 
   const {
     writeContract,
-    isSuccess: isSuccessDeposit,
-    isPending: isLoadingDeposit,
+    isPending: isLoadingDepositHash,
     isError: isErrorDeposit,
     error: depositError,
+    data: depositHashData,
   } = useWriteContract();
+
+  const { isLoading: isLoadingDeposit, isSuccess: isSuccessDeposit } =
+    useWaitForTransactionReceipt({
+      hash: depositHashData,
+    });
 
   useEffect(() => {
     if (isErrorDeposit) {
@@ -82,7 +96,9 @@ const useDepositActions = ({
     isSuccessDeposit,
     isLoadingDeposit,
     isLoadingApprove,
+    isLoadingApproveHash,
     isSuccessApprove,
+    isLoadingDepositHash,
     depositAmount,
   };
 };

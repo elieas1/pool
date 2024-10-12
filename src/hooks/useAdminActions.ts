@@ -2,7 +2,7 @@ import { depositAbi, depositAddress } from "@/utils/depositContract";
 import { handleError, parseUsdc } from "@/utils/functions";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
-import { useWriteContract } from "wagmi";
+import { useWaitForTransactionReceipt, useWriteContract } from "wagmi";
 
 type props = {
   refetchAdminData: () => void;
@@ -17,11 +17,16 @@ const useAdminActions = ({
 }: props) => {
   const {
     writeContract: startNewCycleFn,
-    isPending: isLoadingNewCycle,
-    isSuccess: isSuccessNewCycle,
+    isPending: isLoadingNewCycleHash,
     isError: isErrorNewCycle,
     error: newCycleError,
+    data: newCycleHashData,
   } = useWriteContract();
+
+  const { isLoading: isLoadingNewCycle, isSuccess: isSuccessNewCycle } =
+    useWaitForTransactionReceipt({
+      hash: newCycleHashData,
+    });
 
   useEffect(() => {
     if (isErrorNewCycle) {
@@ -38,11 +43,18 @@ const useAdminActions = ({
 
   const {
     writeContract: approveWithdrawFn,
-    isPending: isLoadingApproveWithdraw,
-    isSuccess: isSuccessApproveWithdraw,
+    isPending: isLoadingApproveWithdrawHash,
     isError: isErrorApproveWithdraw,
     error: ApproveWithdrawError,
+    data: approveWithdrawHashData,
   } = useWriteContract();
+
+  const {
+    isLoading: isLoadingApproveWithdraw,
+    isSuccess: isSuccessApproveWithdraw,
+  } = useWaitForTransactionReceipt({
+    hash: approveWithdrawHashData,
+  });
 
   useEffect(() => {
     if (isErrorApproveWithdraw) {
@@ -59,11 +71,18 @@ const useAdminActions = ({
 
   const {
     writeContract: distributeRewardsFn,
-    isPending: isLoadingDistributeRewards,
-    isSuccess: isSuccessDistributeRewards,
+    isPending: isLoadingDistributeRewardsHash,
     isError: isErrorDistributeRewards,
     error: distributeRewardsError,
+    data: distributeRewardsHashData,
   } = useWriteContract();
+
+  const {
+    isLoading: isLoadingDistributeRewards,
+    isSuccess: isSuccessDistributeRewards,
+  } = useWaitForTransactionReceipt({
+    hash: distributeRewardsHashData,
+  });
 
   useEffect(() => {
     if (isErrorDistributeRewards) {
@@ -109,8 +128,11 @@ const useAdminActions = ({
     approveWithdraw,
     startNewCycle,
     isLoadingNewCycle,
+    isLoadingNewCycleHash,
     isLoadingApproveWithdraw,
+    isLoadingApproveWithdrawHash,
     isLoadingDistributeRewards,
+    isLoadingDistributeRewardsHash,
   };
 };
 
