@@ -1,9 +1,16 @@
-export const depositAddress = "0xCEDC900f71B307b2C4413399542097f77A329E0F";
+export const depositAddress = "0xF4eFd36C692F5c2A9fD4BFc054194A1e63C2a759";
 
 export const depositAbi = [
   {
     inputs: [],
     name: "approveWithdrawRequests",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "cancelAllWithdrawalRequests",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -310,7 +317,7 @@ export const depositAbi = [
           },
           {
             internalType: "uint256",
-            name: "withrawalRequestAmount",
+            name: "withdrawalRequestAmount",
             type: "uint256",
           },
           {

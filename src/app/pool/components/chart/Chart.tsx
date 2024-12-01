@@ -39,7 +39,8 @@ const LineChart = ({
       title: "Epoch",
       viewWindow: {
         min: 0,
-        max: (array?.length ?? 0) + 2, // Adjust this to provide some padding above the highest point
+        // fixing khabset roayre
+        max: (array?.length ?? 0) - 6, // Adjust this to provide some padding above the highest point
       },
       gridlines: {
         count: array?.length, // Ensure there are enough gridlines for padding
@@ -78,6 +79,10 @@ const LineChart = ({
         formattedTotalDeposit) *
       (365 / formattedEpochTime) *
       100;
+
+    if (index > 11 && index < 19) {
+      return;
+    }
 
     data.push([index + 1, apr]);
   });
